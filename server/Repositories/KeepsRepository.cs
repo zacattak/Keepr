@@ -68,6 +68,38 @@ public class KeepsRepository
         }, new { keepId }).FirstOrDefault();
         return keep;
     }
+
+    internal Keep EditKeep(Keep updateData)
+    {
+        string sql = @"
+        UPDATE keeps SET
+        name = @name,
+        description = @description,
+        img = @img
+        WHERE id = @id;
+
+        SELECT 
+        keep.*,
+        account.*
+        FROM keeps keep
+        JOIN accounts account ON keep.creatorId = account.id
+        WHERE keep.id = @id
+        ;";
+        Keep keep = _db.Query<Keep, Account, Keep>(sql, (keep, account) =>
+        {
+            keep.Creator = account;
+            return keep;
+        }, updateData).FirstOrDefault();
+        return keep;
+    }
+
+    internal void DestroyKeep(int keepId)
+    {
+        string sql = @"
+        DELETE FROM keeps
+        WHERE id = @keepId;";
+        _db.Execute(sql, new { keepId });
+    }
 }
 
 

@@ -1,3 +1,5 @@
+namespace Keepr.Controllers;
+
 [ApiController]
 [Route("api/[controller]")]
 
@@ -53,6 +55,41 @@ public class KeepsController : ControllerBase
         {
             Keep keep = _keepsService.GetKeepById(keepId);
             return Ok(keep);
+        }
+        catch (Exception exception)
+        {
+
+            return BadRequest(exception.Message);
+        }
+    }
+    [HttpPut("{keepId}")]
+    [Authorize]
+
+    public ActionResult<Keep> EditKeep([FromBody] Keep updateData, int keepId)
+    {
+        try
+        {
+            updateData.Id = keepId;
+            Keep newKeep = _keepsService.EditKeep(updateData, keepId);
+            return Ok(newKeep);
+        }
+        catch (Exception error)
+        {
+
+            return BadRequest(error.Message);
+        }
+    }
+
+    [HttpDelete("{keepId}")]
+    [Authorize]
+
+    public async Task<ActionResult<Keep>> DestroyKeep(int keepId)
+    {
+        try
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            string message = _keepsService.DestroyKeep(keepId, userInfo.Id);
+            return Ok(message);
         }
         catch (Exception exception)
         {
