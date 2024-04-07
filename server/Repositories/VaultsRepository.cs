@@ -7,7 +7,7 @@ public class VaultsRepository
     {
         _db = db;
     }
-    internal Vault CreateVault(VaultsRepository vaultData)
+    internal Vault CreateVault(Vault vaultData)
     {
         string sql = @"
         INSERT INTO 
@@ -30,4 +30,51 @@ public class VaultsRepository
         return vault;
     }
 
+    internal Vault GetVaultById(int vaultId)
+    {
+        string sql = @"
+        SELECT 
+        vault.*,
+        account.*
+        FROM vaults vault
+        JOIN accounts account ON vault.creatorId = account.id
+        WHERE vault.id = @vaultId
+        ;";
+        Vault vault = _db.Query<Vault, Account, Vault>(sql, _populateCreator, new { vaultId }).FirstOrDefault();
+        // {
+        //     vault.Creator = account;
+        //     return vault;
+        // }, new { vaultId }).FirstOrDefault();
+        return vault;
+
+    }
+
+    internal Vault UpdateVault(Vault data)
+    {
+        string sql = @"
+        UPDATE vaults
+        SET
+        name = @Name,
+        description = @Description,
+        isPrivate = @IsPrivate,
+        WHERE id = @Id;
+
+        SELECT 
+        vault.*,
+        account.*
+        FROM vaults vault
+        JOIN accounts account ON account.id = vault.creatorId
+        WHERE vault.id = @Id
+        ;";
+
+        Vault vault = _db.Query<Vault, Account, Vault>(sql, _populateCreator, data).FirstOrDefault();
+
+        return vault;
+    }
+
+    private Vault _populateCreator(Vault vault, Account account)
+    {
+        vault.Creator = account;
+        return vault;
+    }
 }

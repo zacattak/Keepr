@@ -14,7 +14,7 @@ public class Vault
 
     public string Img { get; set; }
 
-    public bool IsPrivate { get; set; }
+    public bool? IsPrivate { get; set; }
 
     public Account Creator { get; set; }
 }
