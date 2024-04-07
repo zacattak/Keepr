@@ -56,19 +56,22 @@ public class VaultsRepository
         SET
         name = @Name,
         description = @Description,
-        isPrivate = @IsPrivate,
+        isPrivate = @IsPrivate
         WHERE id = @Id;
 
         SELECT 
         vault.*,
         account.*
         FROM vaults vault
-        JOIN accounts account ON account.id = vault.creatorId
+        JOIN accounts account ON vault.creatorId = account.id
         WHERE vault.id = @Id
         ;";
 
-        Vault vault = _db.Query<Vault, Account, Vault>(sql, _populateCreator, data).FirstOrDefault();
-
+        Vault vault = _db.Query<Vault, Account, Vault>(sql, (vault, account) =>
+          {
+              vault.Creator = account;
+              return vault;
+          }, data).FirstOrDefault();
         return vault;
     }
 
