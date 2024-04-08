@@ -80,4 +80,13 @@ public class VaultsRepository
         vault.Creator = account;
         return vault;
     }
+
+    internal void DestroyVault(int vaultId)
+    {
+        string sql = @"
+        DELETE FROM vaults
+        WHERE id = @vaultId
+        ;";
+        _db.Execute(sql, new { vaultId });
+    }
 }

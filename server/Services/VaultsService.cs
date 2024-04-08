@@ -43,4 +43,17 @@ public class VaultsService
         Vault vault = _repository.UpdateVault(vaultToUpdate);
         return vault;
     }
+    internal string DestroyVault(int vaultId, string userId)
+    {
+        Vault vault = GetVaultById(vaultId, userId);
+        if (vault.CreatorId == userId)
+        {
+            _repository.DestroyVault(vaultId);
+            return $"{vault.Name} removed";
+        }
+        else
+        {
+            throw new Exception("You don't have permission to destroy this! Begone!!!");
+        }
+    }
 }
