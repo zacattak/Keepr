@@ -11,11 +11,19 @@ class KeepsService {
         AppState.keeps = response.data.map(pojo => new Keep(pojo))
     }
 
-    setActiveKeep(keep) {
-        AppState.activeKeep = null
-        AppState.activeKeep = keep
-        logger.log('activating keep', AppState.activeKeep)
+    // setActiveKeep(keep) {
+    //     AppState.activeKeep = null
+    //     AppState.activeKeep = keep
+    //     logger.log('activating keep', AppState.activeKeep)
+    // }
+
+    async getKeepById(keepId) {
+        const res = await api.get(`api/keeps/${keepId}`)
+        logger.log('GOT KEEP', res.data)
+        AppState.activeKeep = new Keep(res.data)
     }
+
+
 }
 
 export const keepsService = new KeepsService()
