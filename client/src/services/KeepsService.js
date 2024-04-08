@@ -10,6 +10,12 @@ class KeepsService {
         logger.log('GOT KEEPS', response.data)
         AppState.keeps = response.data.map(pojo => new Keep(pojo))
     }
+
+    setActiveKeep(keep) {
+        AppState.activeKeep = null
+        AppState.activeKeep = keep
+        logger.log('activating keep', AppState.activeKeep)
+    }
 }
 
 export const keepsService = new KeepsService()

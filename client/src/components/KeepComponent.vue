@@ -1,4 +1,5 @@
-<!-- <template>
+<template>
+
     <section class="row d-flex justify-content-center">
         <div @click="setActiveKeep()" class="selectable" type="button" data-bs-toggle="modal"
             data-bs-target="#keepModal">
@@ -8,21 +9,38 @@
             <p>{{ keep.description }}</p>
         </div>
     </section>
-</template> -->
-
-<template>
-
 
 </template>
 
 
 <script>
+import { Keep } from '../models/Keep.js';
+import { keepsService } from '../services/KeepsService.js';
+import Pop from '../utils/Pop.js';
 export default {
-    setup() {
-        return {}
+    props: {
+        keep: { type: Keep, required: true }
+    },
+    setup(props) {
+        return {
+            setActiveKeep() {
+                try {
+                    keepsService.setActiveKeep(props.keep)
+                }
+                catch (error) {
+                    Pop.error(error);
+                }
+            }
+        }
     }
 }
 </script>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.img {
+    width: 100%;
+    object-fit: cover;
+    height: 40vh;
+}
+</style>
