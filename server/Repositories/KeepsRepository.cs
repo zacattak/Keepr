@@ -75,7 +75,8 @@ public class KeepsRepository
         UPDATE keeps SET
         name = @name,
         description = @description,
-        img = @img
+        img = @img,
+        views = @views
         WHERE id = @id;
 
         SELECT 

@@ -19,15 +19,26 @@ public class KeepsService
         return keeps;
     }
 
-    internal Keep GetKeepById(int keepId)
+    internal Keep GetKeepByIdAndIncrementViews(int keepId, string userId)
+    {
+        Keep keep = GetKeepById(keepId, userId);
+
+        keep.Views++;
+
+        _repository.EditKeep(keep);
+
+        return keep;
+    }
+
+    internal Keep GetKeepById(int keepId, string userId)
     {
         Keep keep = _repository.GetKeepById(keepId);
         return keep;
     }
 
-    internal Keep EditKeep(Keep updateData, int keepId)
+    internal Keep EditKeep(Keep updateData, int keepId, string userId)
     {
-        Keep originalKeep = GetKeepById(keepId);
+        Keep originalKeep = GetKeepById(keepId, userId);
         originalKeep.Name = updateData.Name?.Length > 0 ? updateData.Name : originalKeep.Name;
         originalKeep.Description = updateData.Description?.Length > 0 ? updateData.Description : originalKeep.Description;
         originalKeep.Img = updateData.Img?.Length > 0 ? updateData.Img : originalKeep.Img;
@@ -37,7 +48,7 @@ public class KeepsService
 
     internal string DestroyKeep(int keepId, string userId)
     {
-        Keep keep = GetKeepById(keepId);
+        Keep keep = GetKeepById(keepId, userId);
         if (keep.CreatorId != userId)
         {
 
