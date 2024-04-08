@@ -1,43 +1,66 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 card align-items-center shadow rounded elevation-3">
-      <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo"
-        class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
-    </div>
+  <div class="container-fluid bg-info">
+    <section class="row d-flex justify-content-evenly">
+
+    </section>
+
   </div>
 </template>
 
 <script>
+import { computed, onMounted } from 'vue';
+import Pop from '../utils/Pop';
+import { AppState } from '../AppState';
+import { keepsService } from '../services/KeepsService.js'
+
+
+
+
 export default {
+
+
   setup() {
+
+    async function getKeeps() {
+      try {
+        await keepsService.getKeeps()
+      }
+      catch (error) {
+        Pop.error(error);
+      }
+    }
+
+    onMounted(getKeeps)
     return {
-      
+      keeps: computed(() => AppState.keeps)
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.home {
-  display: grid;
-  height: 80vh;
-  place-content: center;
-  text-align: center;
-  user-select: none;
-
-  .home-card {
-    width: clamp(500px, 50vw, 100%);
-
-    >img {
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
-  }
+.card {
+  border: 2px solid black;
+  border-radius: 16px;
+  box-shadow: 3px 3px 10px rgba(42, 6, 134, 0.31);
 }
-</style>
+
+// .home {
+//   display: grid;
+//   height: 80vh;
+//   place-content: center;
+//   text-align: center;
+//   user-select: none;
+
+//   .home-card {
+//     width: clamp(500px, 50vw, 100%);
+
+//     >img {
+//       height: 200px;
+//       max-width: 200px;
+//       width: 100%;
+//       object-fit: contain;
+//       object-position: center;
+//     }
+//   }
+// }</style>
