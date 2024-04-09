@@ -8,3 +8,5 @@ public class Account
   public string Picture { get; set; }
   public string CoverImg { get; set; }
 }
+
+

@@ -45,16 +45,38 @@ public class VaultKeepsRepository
         return keepClone;
     }
 
-    // internal List<KeepClone> GetVaultKeepsByVaultId(int vaultId)
-    // {
-    //     string sql = @"
-    //     SELECT
-    //     vaultKeep.*,
-    //     vault.*
-    //     FROM vaultKeeps vaultKeep
-    //     JOIN vaults vault ON vault.id = vaultKeep.vaultId
-    //     WHERE vaultKeep.vaultId = 
-    //     ;";
-    // }
+    internal List<KeepClone> GetVaultKeepsByVaultId(int vaultId)
+    {
+        string sql = @"
+        SELECT
+        vaultKeep.*,
+        vault.*
+        FROM vaultKeeps vaultKeep
+        JOIN vaults vault ON vault.id = vaultKeep.vaultId
+        WHERE vaultKeep.vaultId = @vaultId
+        ;";
+        List<KeepClone> keepClones = _db.Query<VaultKeep, KeepClone, KeepClone>(sql, (vaultKeep, keepClone) =>
+        {
+            keepClone.VaultKeepId = vaultKeep.Id;
+            return keepClone;
+        }, new { vaultId }).ToList();
 
+        return keepClones;
+
+    }
+
+    internal VaultKeep FindVaultKeepById(int vaultKeepId)
+    {
+        string sql = @"SELECT * FROM vaultKeeps WHERE id = @vaultKeepId;";
+        VaultKeep vaultKeep = _db.Query<VaultKeep>(sql, new { vaultKeepId }).FirstOrDefault();
+        return vaultKeep;
+    }
+
+    internal void DeleteVaultKeep(int vaultKeepId)
+    {
+        string sql = @"
+        DELETE FROM vaultKeeps
+        WHERE id = @vaultKeepId;";
+        _db.Execute(sql, new { vaultKeepId });
+    }
 }

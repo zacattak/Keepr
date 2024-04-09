@@ -86,18 +86,18 @@ public class VaultsController : ControllerBase
         }
     }
 
-    // [HttpGet("{vaultId}/keeps")] // 'https://localhost:7045/api/albums/4/pictures'
-    // public ActionResult<List<KeepClone>> GetVaultKeepsByVaultId(int vaultId)
-    // {
-    //     try
-    //     {
-    //         List<KeepClone> keeps = _vaultKeepsService.GetVaultKeepsByVaultId(vaultId);
-    //         return Ok(keeps);
-    //     }
-    //     catch (Exception exception)
-    //     {
-    //         return BadRequest(exception.Message);
-    //     }
-    // }
+    [HttpGet("{vaultId}/keeps")]
+    public ActionResult<List<KeepClone>> GetVaultKeepsByVaultId(int vaultId)
+    {
+        try
+        {
+            List<KeepClone> keeps = _vaultKeepsService.GetVaultKeepsByVaultId(vaultId);
+            return Ok(keeps);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+    }
 
 }

@@ -1,6 +1,7 @@
 <template>
   <header>
-    <Navbar />
+    <!-- <Navbar /> -->
+    <Nav />
   </header>
   <main>
     <router-view />
@@ -14,6 +15,7 @@
 import { computed } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
+import Nav from './components/Nav.vue'
 
 export default {
   setup() {
@@ -21,7 +23,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar }
+  components: { Navbar, Nav }
 }
 </script>
 <style lang="scss">
