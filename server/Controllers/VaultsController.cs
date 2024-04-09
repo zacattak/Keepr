@@ -7,12 +7,15 @@ public class VaultsController : ControllerBase
 {
     private readonly VaultsService _vaultsService;
 
+    private readonly VaultKeepsService _vaultKeepsService;
+
     private readonly Auth0Provider _auth0Provider;
 
-    public VaultsController(VaultsService vaultsService, Auth0Provider auth0Provider)
+    public VaultsController(VaultsService vaultsService, Auth0Provider auth0Provider, VaultKeepsService vaultKeepsService)
     {
         _vaultsService = vaultsService;
         _auth0Provider = auth0Provider;
+        _vaultKeepsService = vaultKeepsService;
     }
 
     [HttpPost]
@@ -82,5 +85,19 @@ public class VaultsController : ControllerBase
             return BadRequest(exception.Message);
         }
     }
+
+    // [HttpGet("{vaultId}/keeps")] // 'https://localhost:7045/api/albums/4/pictures'
+    // public ActionResult<List<KeepClone>> GetVaultKeepsByVaultId(int vaultId)
+    // {
+    //     try
+    //     {
+    //         List<KeepClone> keeps = _vaultKeepsService.GetVaultKeepsByVaultId(vaultId);
+    //         return Ok(keeps);
+    //     }
+    //     catch (Exception exception)
+    //     {
+    //         return BadRequest(exception.Message);
+    //     }
+    // }
 
 }

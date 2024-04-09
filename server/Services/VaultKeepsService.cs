@@ -11,9 +11,15 @@ public class VaultKeepsService
 
     internal KeepClone CreateVaultKeep(VaultKeep vaultKeepData)
     {
-        KeepClone vaultKeep = _repository.CreateVaultKeep(vaultKeepData);
-        return vaultKeep;
+        KeepClone keepClone = _repository.CreateVaultKeep(vaultKeepData);
+        return keepClone;
     }
+
+    // internal List<KeepClone> GetVaultKeepsByVaultId(int vaultId)
+    // {
+    //     List<KeepClone> keepClones = _repository.GetVaultKeepsByVaultId(vaultId);
+    //     return keepClones;
+    // }
 
 
 }

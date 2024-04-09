@@ -16,4 +16,25 @@ public class VaultKeepsController : ControllerBase
         _auth0Provider = auth0Provider;
     }
 
+    [HttpPost]
+    [Authorize]
+
+    public async Task<ActionResult<KeepClone>> CreateVaultKeep(VaultKeep vaultKeepData)
+    {
+        try
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+
+            vaultKeepData.CreatorId = userInfo.Id;
+
+            KeepClone keepClone = _vaultKeepsService.CreateVaultKeep(vaultKeepData);
+
+            return Ok(keepClone);
+        }
+        catch (Exception exception)
+        {
+
+            return BadRequest(exception.Message);
+        }
+    }
 }
