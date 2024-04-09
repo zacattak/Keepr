@@ -10,9 +10,62 @@
                         Create
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Create Keep</a>
-                        <a class="dropdown-item" href="#">Create Vault</a>
-                        <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+                        <form class="dropdown-item px-4 py-3" @submit.prevent="createKeep()">
+                            <div class="form-group">
+                                <!-- <label for="keepName">Keep Name</label> -->
+                                <input v-model="editableKeepData.name" type="text" class="form-control" id="name"
+                                    placeholder="Enter Keep Name" required maxlength="255">
+                                <!-- <label for="keepDescription">Keep Description</label> -->
+                                <input v-model="editableKeepData.description" type="text" class="form-control"
+                                    id="description" placeholder="Enter Keep Description" required maxlength="1000">
+                                <!-- <label for="keepImg">Keep Image</label> -->
+                                <input v-model="editableKeepData.img" type="text" class="form-control" id="img"
+                                    placeholder="Enter Keep Image" required maxlength="1000">
+
+                            </div>
+                            <button type="submit" class="btn btn-primary">Create Keep</button>
+                        </form>
+
+                        <!-- <a class="dropdown-item" href="#">Create Keep</a> -->
+                        <!-- <a class="dropdown-item" href="#">Create Vault</a> -->
+                        <form class="dropdown-item px-4 py-3" @submit.prevent="createVault()">
+                            <div class="form-group">
+                                <!-- <label for="vaultName">Vault Name</label>
+                                <label for="vaultDescription">Vault Description</label>
+                                <label for="vaultImg">Vault Image</label>
+                                <label for="isPrivate"></label> -->
+                                <input v-model="editableVaultData.name" type="text" class="form-control" id="vaultName"
+                                    placeholder="Enter Vault Name" required maxlength="255">
+                                <input v-model="editableVaultData.description" type="text" class="form-control"
+                                    id="vaultDescription" placeholder="Enter Vault Description" required
+                                    maxlength="1000">
+                                <input v-model="editableVaultData.img" type="text" class="form-control" id="vaultImg"
+                                    placeholder="Enter Vault Image" required maxlength="1000">
+
+
+                            </div>
+                            <button type="submit" class="btn btn-primary">Create Vault</button>
+                        </form>
+
+                        <form class="dropdown-item px-4 py-3" onsubmit="return false;">
+                            <div class="form-group">
+                                <!-- <label for="vaultName">Vault Name</label>
+                                <label for="vaultDescription">Vault Description</label>
+                                <label for="vaultImg">Vault Image</label>
+                                <label for="isPrivate"></label> -->
+                                <input type="text" class="form-control" id="privateVaultName"
+                                    placeholder="Enter Vault Name" required maxlength="255">
+                                <input type="text" class="form-control" id="privateVaultDescription"
+                                    placeholder="Enter Vault Description" required maxlength="1000">
+                                <input type="text" class="form-control" id="privateVaultImg"
+                                    placeholder="Enter Vault Img" required maxlength="1000">
+                                <!-- <input type="text" class="form-control" id="vaultIsPrivate" placeholder="Enter Vault Name"> -->
+
+
+                            </div>
+                            <button type="submit" class="btn btn-danger">Create Private Vault</button>
+                        </form>
+
                     </div>
                 </div>
 
@@ -41,9 +94,44 @@
 
 <script>
 import Login from './Login.vue';
+import { keepsService } from '../services/KeepsService';
+import { vaultsService } from '../services/VaultsService';
+
+import { ref } from 'vue';
+import Pop from '../utils/Pop';
 export default {
     setup() {
-        return {}
+        const editableKeepData = ref({ name: '', description: '', img: '' })
+
+        const editableVaultData = ref({ name: '', description: '', img: '' })
+
+        return {
+            editableKeepData,
+
+            editableVaultData,
+
+            async createVault() {
+                try {
+                    const vault = await vaultsService.createVault(editableVaultData.value)
+                    editableVaultData.value = { name: '', description: '', img: '' }
+                    Pop.success(`${vault.name} has been created`)
+                }
+                catch (error) {
+                    Pop.error(error);
+                }
+            },
+
+            async createKeep() {
+                try {
+                    const keep = await keepsService.createKeep(editableKeepData.value)
+                    editableKeepData.value = { name: '', description: '', img: '' }
+                    Pop.success(`${keep.name} has been created`)
+                }
+                catch (error) {
+                    Pop.error(error);
+                }
+            }
+        }
     },
 
     components: { Login }
