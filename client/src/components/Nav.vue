@@ -47,19 +47,20 @@
                             <button type="submit" class="btn btn-primary">Create Vault</button>
                         </form>
 
-                        <form class="dropdown-item px-4 py-3" onsubmit="return false;">
+                        <form class="dropdown-item px-4 py-3" @submit.prevent="createPrivateVault()">
                             <div class="form-group">
                                 <!-- <label for="vaultName">Vault Name</label>
                                 <label for="vaultDescription">Vault Description</label>
                                 <label for="vaultImg">Vault Image</label>
                                 <label for="isPrivate"></label> -->
-                                <input type="text" class="form-control" id="privateVaultName"
-                                    placeholder="Enter Vault Name" required maxlength="255">
-                                <input type="text" class="form-control" id="privateVaultDescription"
-                                    placeholder="Enter Vault Description" required maxlength="1000">
-                                <input type="text" class="form-control" id="privateVaultImg"
-                                    placeholder="Enter Vault Img" required maxlength="1000">
-                                <!-- <input type="text" class="form-control" id="vaultIsPrivate" placeholder="Enter Vault Name"> -->
+                                <input v-model="editablePrivateVaultData.name" type="text" class="form-control"
+                                    id="privateVaultName" placeholder="Enter Vault Name" required maxlength="255">
+                                <input v-model="editablePrivateVaultData.description" type="text" class="form-control"
+                                    id="privateVaultDescription" placeholder="Enter Vault Description" required
+                                    maxlength="1000">
+                                <input v-model="editablePrivateVaultData.img" type="text" class="form-control"
+                                    id="privateVaultImg" placeholder="Enter Vault Img" required maxlength="1000">
+                                <!-- <input type="bool" class="form-control" id="isPrivate" placeholder="Enter Vault Name"> -->
 
 
                             </div>
@@ -105,10 +106,27 @@ export default {
 
         const editableVaultData = ref({ name: '', description: '', img: '' })
 
+        const editablePrivateVaultData = ref({ name: '', description: '', img: '', isPrivate: true })
+
         return {
             editableKeepData,
 
             editableVaultData,
+
+            editablePrivateVaultData,
+
+            async createPrivateVault() {
+
+                try {
+                    const privateVault = await vaultsService.createPrivateVault(editablePrivateVaultData.value)
+                    editablePrivateVaultData.value = { name: '', description: '', img: '', isPrivate: true }
+                    Pop.success(`${privateVault.name} has been created`)
+                }
+                catch (error) {
+                    Pop.error(error);
+                }
+
+            },
 
             async createVault() {
                 try {
@@ -131,6 +149,8 @@ export default {
                     Pop.error(error);
                 }
             }
+
+
         }
     },
 

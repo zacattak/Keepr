@@ -38,7 +38,7 @@ public class VaultsService
 
         vaultToUpdate.Name = vaultData.Name ?? vaultToUpdate.Name;
         vaultToUpdate.Description = vaultData.Description ?? vaultToUpdate.Description;
-        vaultToUpdate.IsPrivate = vaultData.IsPrivate ?? vaultToUpdate.IsPrivate;
+        // vaultToUpdate.IsPrivate = vaultData.IsPrivate ?? vaultToUpdate.IsPrivate;
 
         Vault vault = _repository.UpdateVault(vaultToUpdate);
         return vault;
