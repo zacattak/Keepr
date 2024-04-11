@@ -15,17 +15,18 @@ public class ProfilesController : ControllerBase
         _auth0Provider = auth0Provider;
     }
 
-    [HttpGet("{accountId}")]
+    [HttpGet]
 
-    public ActionResult<Account> GetProfileById(string accountId)
+    // public async Task<ActionResult<Account>> GetProfileById(string accountId)
+    public async Task<ActionResult<Account>> GetProfileById(string accountId)
 
     // async task
     {
         try
         {
-            // Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
             Account account = _accountService.GetProfileById(accountId);
-            // userInfo?.Id
+            // userInfo?.Id;
             return Ok(account);
         }
         catch (Exception error)

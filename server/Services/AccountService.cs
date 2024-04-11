@@ -24,7 +24,7 @@ public class AccountService
     return profile;
   }
 
-  internal Account Edit(Account editData, string userEmail)
+  internal Account Edit(Account editData, string userId, string userEmail)
   {
     Account original = GetProfileByEmail(userEmail);
     original.Name = editData.Name?.Length > 0 ? editData.Name : original.Name;
@@ -35,7 +35,7 @@ public class AccountService
   internal Account GetProfileById(string accountId)
   // string userId
   {
-    Account account = _repo.GetById(accountId);
+    Account account = _repo.GetProfileById(accountId);
 
     return account;
   }

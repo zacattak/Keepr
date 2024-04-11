@@ -9,6 +9,7 @@ public class VaultKeep
 
     public string CreatorId { get; set; }
 
+    public Account Creator { get; set; }
 
     public int KeepId { get; set; }
 

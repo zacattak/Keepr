@@ -18,7 +18,7 @@ public class Keep
 
 
 
-    // public int Kept { get; set; }
+    public int Kept { get; set; }
 
     public Account Creator { get; set; }
 

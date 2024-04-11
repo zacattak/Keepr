@@ -56,4 +56,11 @@ public class VaultsService
             throw new Exception("You don't have permission to destroy this! Begone!!!");
         }
     }
+
+    internal List<Vault> GetMyVaults(string userId)
+    {
+        List<Vault> vaults = _repository.GetMyVaults(userId);
+        return vaults;
+    }
+
 }

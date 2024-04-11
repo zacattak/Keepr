@@ -3,10 +3,12 @@ namespace Keepr.Services;
 public class VaultKeepsService
 {
     private readonly VaultKeepsRepository _repository;
+    private readonly VaultsService _vaultsService;
 
-    public VaultKeepsService(VaultKeepsRepository repository)
+    public VaultKeepsService(VaultKeepsRepository repository, VaultsService vaultsService)
     {
         _repository = repository;
+        _vaultsService = vaultsService;
     }
 
     internal KeepClone CreateVaultKeep(VaultKeep vaultKeepData)
@@ -15,8 +17,9 @@ public class VaultKeepsService
         return keepClone;
     }
 
-    internal List<KeepClone> GetVaultKeepsByVaultId(int vaultId)
+    internal List<KeepClone> GetVaultKeepsByVaultId(int vaultId, string userId)
     {
+        _vaultsService.GetVaultById(vaultId, userId);
         List<KeepClone> keepClones = _repository.GetVaultKeepsByVaultId(vaultId);
         return keepClones;
     }
