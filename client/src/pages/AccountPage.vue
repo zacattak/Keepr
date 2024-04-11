@@ -1,8 +1,16 @@
 <template>
   <div class="container-fluid text-center bg-info">
     <h1>Welcome {{ account.name }}</h1>
+
+
+    <div class="col-12">
+      <img :src="account.coverImg" alt="">
+    </div>
+
     <img class="rounded" :src="account.picture" alt="" />
-    <p>{{ account.email }}</p>
+
+
+    <!-- <p>{{ account.email }}</p> -->
 
     <form @submit.prevent="updateAccount()">
       <div class="form-group">
@@ -15,6 +23,11 @@
         <label for="picture">Picture</label>
         <input v-model="editableAccountData.picture" type="picture" class="form-control" id="picture"
           placeholder="Picture">
+      </div>
+      <div class="form-group">
+        <label for="coverImg">Cover Image</label>
+        <input v-model="editableAccountData.coverImg" type="coverImg" class="form-control" id="coverImg"
+          placeholder="Cover Image">
       </div>
 
       <button type="submit" class="btn btn-primary mt-2">Submit</button>
@@ -31,7 +44,8 @@ import { accountService } from '../services/AccountService';
 export default {
   setup() {
 
-    const editableAccountData = ref({ name: '', picture: '' })
+    const editableAccountData = ref({ name: '', picture: '', coverImg: '' })
+    // coverImg: '' 
     return {
       account: computed(() => AppState.account),
       editableAccountData,

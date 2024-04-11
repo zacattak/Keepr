@@ -15,7 +15,8 @@ public class ProfilesController : ControllerBase
         _auth0Provider = auth0Provider;
     }
 
-    [HttpGet]
+    // FIXME allow a route parameter
+    [HttpGet("{accountId}")]
 
     // public async Task<ActionResult<Account>> GetProfileById(string accountId)
     public async Task<ActionResult<Account>> GetProfileById(string accountId)

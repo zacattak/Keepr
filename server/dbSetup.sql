@@ -14,6 +14,8 @@ create TABLE vaultKeeps (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created', updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update', creatorId VARCHAR(255) NOT NULL, vaultId INT NOT NULL, keepId INT NOT NULL, FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE, FOREIGN KEY (vaultId) REFERENCES vaults (id) ON DELETE CASCADE, FOREIGN KEY (keepId) REFERENCES keeps (id) ON DELETE CASCADE
 )
 
+ALTER TABLE accounts ADD coverImg varchar(255);
+
 SELECT keep.*, account.*
 FROM keeps keep
     JOIN accounts account ON keep.creatorId = account.id;

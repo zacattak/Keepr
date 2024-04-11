@@ -34,11 +34,13 @@ public class AccountsRepository
 
   internal Account Edit(Account update)
   {
+    // FIXME make sure i can update my coverImg
     string sql = @"
             UPDATE accounts
             SET 
               name = @Name,
-              picture = @Picture
+              picture = @Picture,
+              coverImg = @CoverImg
             WHERE id = @Id;";
     _db.Execute(sql, update);
     return update;
@@ -47,7 +49,7 @@ public class AccountsRepository
   internal Account GetProfileById(string accountId)
 
   {
-    string sql = "SELECT * FROM accounts WHERE id = @Id;";
+    string sql = "SELECT * FROM accounts WHERE id = @AccountId;";
     return _db.QueryFirstOrDefault<Account>(sql, new { accountId });
 
   }

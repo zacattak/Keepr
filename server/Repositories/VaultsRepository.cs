@@ -94,6 +94,7 @@ public class VaultsRepository
 
     internal List<Vault> GetMyVaults(string userId)
     {
+        // FIXME get vaults WHERE they are mine
         string sql = @"
         SELECT
         vault.*,

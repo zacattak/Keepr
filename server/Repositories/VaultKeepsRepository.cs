@@ -54,27 +54,21 @@ public class VaultKeepsRepository
 
     internal List<KeepClone> GetVaultKeepsByVaultId(int vaultId)
     {
+        // FIXME you probably dont need to join the vaults table at all, reference postit
         string sql = @"
         SELECT
         vaultKeep.*,
-        vault.*,
         keep.*,
         account.*
         FROM vaultKeeps vaultKeep
-        JOIN vaults vault ON vault.id = vaultKeep.vaultId
         JOIN keeps keep ON keep.id = vaultKeep.keepId
         JOIN accounts account ON account.id = vaultKeep.creatorId
         WHERE vaultKeep.vaultId = @vaultId
         ;";
-        List<KeepClone> keepClones = _db.Query<VaultKeep, KeepClone, Keep, Account, KeepClone>(sql, (vaultKeep, keepClone, keep, account) =>
+
+        List<KeepClone> keepClones = _db.Query<VaultKeep, KeepClone, Account, KeepClone>(sql, (vaultKeep, keepClone, account) =>
         {
             keepClone.VaultKeepId = vaultKeep.Id;
-            keepClone.VaultId = vaultKeep.VaultId;
-            // keepClone.VaultId = vaultKeep.VaultId;
-
-
-            // keepClone.Id = vaultKeep.KeepId;
-            keepClone.VaultId = vaultKeep.KeepId;
             keepClone.CreatorId = vaultKeep.CreatorId;
             keepClone.Creator = account;
             return keepClone;
