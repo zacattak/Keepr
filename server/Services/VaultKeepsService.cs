@@ -11,10 +11,14 @@ public class VaultKeepsService
         _vaultsService = vaultsService;
     }
 
-    internal KeepClone CreateVaultKeep(VaultKeep vaultKeepData)
+    internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
     {
-        KeepClone keepClone = _repository.CreateVaultKeep(vaultKeepData);
-        return keepClone;
+        // FIXME get vault first to see if I am the creator of it (CRATE REPORT ON RESTAURANT REVIEWS)
+        Vault vault = _vaultsService.GetVaultById(vaultKeepData.VaultId, vaultKeepData.CreatorId);
+
+
+        VaultKeep vaultKeep = _repository.CreateVaultKeep(vaultKeepData);
+        return vaultKeep;
     }
 
     internal List<KeepClone> GetVaultKeepsByVaultId(int vaultId, string userId)

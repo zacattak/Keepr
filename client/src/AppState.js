@@ -12,8 +12,17 @@ export const AppState = reactive({
 
   vaults: [],
 
+  accountVaults: [],
+
+  vaultKeeps: [],
+
+
   // FIXME crate new array for just logged in user's vaults
 
   activeKeep: null,
+
+  activeVault: null,
+
+  activeAccount: null
 
 })

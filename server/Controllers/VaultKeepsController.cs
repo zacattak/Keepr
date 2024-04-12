@@ -19,7 +19,7 @@ public class VaultKeepsController : ControllerBase
     [HttpPost]
     [Authorize]
 
-    public async Task<ActionResult<KeepClone>> CreateVaultKeep(VaultKeep vaultKeepData)
+    public async Task<ActionResult<VaultKeep>> CreateVaultKeep([FromBody] VaultKeep vaultKeepData)
     {
         try
         {
@@ -27,9 +27,9 @@ public class VaultKeepsController : ControllerBase
 
             vaultKeepData.CreatorId = userInfo.Id;
 
-            KeepClone keepClone = _vaultKeepsService.CreateVaultKeep(vaultKeepData);
+            VaultKeep vaultKeep = _vaultKeepsService.CreateVaultKeep(vaultKeepData);
 
-            return Ok(keepClone);
+            return Ok(vaultKeep);
         }
         catch (Exception exception)
         {

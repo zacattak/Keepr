@@ -1,7 +1,7 @@
 <template>
     <nav class="bg-dark">
         <section class="row">
-            <div class="col-4 text-center">
+            <div class="col-3 text-center">
 
                 <!-- <p class="my-3 text-info">placeholder</p> -->
                 <div class="dropdown my-2">
@@ -73,7 +73,7 @@
 
             </div>
 
-            <div class="col-4 text-center">
+            <div class="col-3 text-center">
                 <!-- <h1>🕋</h1> -->
                 <router-link class="" :to="{ name: 'Home' }">
                     <p class="my-3 text-info">Chamber of Keeps</p>
@@ -81,7 +81,14 @@
 
             </div>
 
-            <div class="col-4 text-center">
+            <div class="col-3 text-center">
+                <router-link class="" :to="{ name: 'Vaults' }">
+                    <p class="my-3 text-info">My Vaults</p>
+                </router-link>
+
+            </div>
+
+            <div class="col-3 text-center">
                 <p class="my-2">
                     <Login />
                 </p>
@@ -100,7 +107,11 @@ import { vaultsService } from '../services/VaultsService';
 
 import { ref } from 'vue';
 import Pop from '../utils/Pop';
+import { Account } from '../models/Account';
 export default {
+    // props: {
+    //     account: { type: Account, required: true }
+    // },
     setup() {
         const editableKeepData = ref({ name: '', description: '', img: '' })
 

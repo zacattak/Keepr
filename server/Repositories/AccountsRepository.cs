@@ -49,7 +49,7 @@ public class AccountsRepository
   internal Account GetProfileById(string accountId)
 
   {
-    string sql = "SELECT * FROM accounts WHERE id = @AccountId;";
+    string sql = "SELECT * FROM accounts WHERE id = @accountId;";
     return _db.QueryFirstOrDefault<Account>(sql, new { accountId });
 
   }

@@ -23,7 +23,9 @@ import { keepsService } from '../services/KeepsService.js'
 
 
 export default {
-
+  // props: {
+  //       account: { type: Account, required: true }
+  //   },
 
   setup() {
 

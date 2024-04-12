@@ -38,6 +38,7 @@ public class KeepsService
 
     internal Keep EditKeep(Keep updateData, int keepId, string userId)
     {
+        // FIXME I shouldnt be able to edit someone elses keep
         Keep originalKeep = GetKeepById(keepId, userId);
         originalKeep.Name = updateData.Name?.Length > 0 ? updateData.Name : originalKeep.Name;
         originalKeep.Description = updateData.Description?.Length > 0 ? updateData.Description : originalKeep.Description;
@@ -62,5 +63,11 @@ public class KeepsService
         return $"{keep.Name} destroyed";
 
 
+    }
+
+    internal List<Keep> GetKeepsByAccountId(string accountId)
+    {
+        List<Keep> keeps = _repository.GetKeepsByAccountId(accountId);
+        return keeps;
     }
 }

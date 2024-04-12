@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Configuration.UserSecrets;
+
 namespace Keepr.Services;
 
 public class VaultsService
@@ -60,6 +62,19 @@ public class VaultsService
     internal List<Vault> GetMyVaults(string userId)
     {
         List<Vault> vaults = _repository.GetMyVaults(userId);
+        return vaults;
+    }
+
+    internal List<Vault> GetVaultsByAccountId(string accountId, string userId)
+    {
+        // FIXME makes sure we are only sendind private vaults to the creator (HELP REVIESWS)
+
+
+        List<Vault> vaults = _repository.GetVaultsByAccountId(accountId);
+
+        vaults = vaults.FindAll(vault => vault.IsPrivate == false || vault.CreatorId == userId);
+
+
         return vaults;
     }
 

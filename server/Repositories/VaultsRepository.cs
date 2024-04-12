@@ -101,15 +101,36 @@ public class VaultsRepository
         account.*
         FROM vaults vault
         JOIN accounts account ON account.id = vault.creatorId
-        
+        WHERE vault.creatorId = @userId
         ;";
+        // JOIN accounts account ON account.id = vault.creatorId
         // WHERE vault.accountId = @userId
-
         List<Vault> vaults = _db.Query<Vault, Account, Vault>(sql, (vault, account) =>
         {
             vault.Creator = account;
+            // vault.CreatorId = account.Id;
             return vault;
-        }).ToList();
+        }, new { userId }).ToList();
+        return vaults;
+    }
+
+    internal List<Vault> GetVaultsByAccountId(string accountId)
+    {
+        string sql = @"
+        SELECT
+        vault.*,
+        account.*
+        FROM vaults vault
+        JOIN accounts account ON vault.creatorId = account.id
+        WHERE vault.creatorId = @accountId
+        ;";
+
+        List<Vault> vaults = _db.Query<Vault, Account, Vault>(sql, (vault, account) =>
+    {
+        vault.Creator = account;
+        // vault.CreatorId = account.Id;
+        return vault;
+    }, new { accountId }).ToList();
         return vaults;
     }
 }

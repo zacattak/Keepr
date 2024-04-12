@@ -25,6 +25,27 @@ class VaultsService {
         const privateVault = new PrivateVault(response.data)
         return privateVault
     }
+
+    async getVaultsByAccountId(accountId) {
+        const res = await api.get(`api/profiles/${accountId}/vaults`)
+        // api/profiles/${accountId}/vaults
+
+        //note this is probably where my problem lies, working on profile page because of route params
+        logger.log('got vaults', res.data)
+        AppState.vaults = res.data.map(pojo => new Vault(pojo))
+    }
+
+    async getAccountVaults() {
+        const response = await api.get('/account/vaults')
+        logger.log('GOT VAULTS', response.data)
+        AppState.accountVaults = response.data.map(pojo => new Vault(pojo))
+    }
+
+    async getVaultById(vaultId) {
+        const response = await api.get(`api/vaults/${vaultId}`)
+        logger.log('got vault', response.data)
+        AppState.activeVault = new Vault(response.data)
+    }
 }
 
 export const vaultsService = new VaultsService()

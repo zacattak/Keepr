@@ -17,6 +17,12 @@ class AccountService {
     logger.log('Updated account', res.data)
     AppState.account = new Account(res.data)
   }
+  async getAccountById(accountId) {
+    const response = await api.get(`api/profiles/${accountId}`)
+    logger.log('got profile', response.data)
+    const profile = new Account(response.data)
+    AppState.activeAccount = profile
+  }
 }
 
 export const accountService = new AccountService()

@@ -102,6 +102,26 @@ public class KeepsRepository
         _db.Execute(sql, new { keepId });
     }
 
+    internal List<Keep> GetKeepsByAccountId(string accountId)
+    {
+        string sql = @"
+        SELECT
+        keep.*,
+        account.*
+        FROM keeps keep 
+        JOIN accounts account ON keep.creatorId = account.id
+        WHERE keep.creatorId = @accountId
+        
+        ;";
+
+        List<Keep> keeps = _db.Query<Keep, Account, Keep>(sql, (keep, account) =>
+        {
+            keep.Creator = account;
+            // vault.CreatorId = account.Id;
+            return keep;
+        }, new { accountId }).ToList();
+        return keeps;
+    }
 
 }
 
