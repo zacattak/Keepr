@@ -11,7 +11,7 @@
                 <div>
 
 
-                    <img :src="vault.img" :alt="vault.name" class="img">
+                    <img :src="vault.img" :alt="vault.name" class="img-fluid">
 
                 </div>
             </RouterLink>
@@ -19,6 +19,8 @@
 
             <p>{{ vault.description }}</p>
         </div>
+
+        <button @click="deleteVault(vaultId)" type="button" class="btn btn-primary">DELETE</button>
     </section>
 
 
@@ -26,7 +28,9 @@
 
 
 <script>
+import { computed } from 'vue';
 import { Vault } from '../models/Vault';
+import { AppState } from '../AppState';
 
 export default {
     props: {
@@ -34,7 +38,15 @@ export default {
     },
     setup(props) {
         return {
-            // vaults: computed(() => AppState.accountVaults)
+
+
+            vaults: computed(() => AppState.accountVaults),
+
+
+
+            async deleteVault(vaultId) {
+
+            }
         }
     }
 }

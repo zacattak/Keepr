@@ -44,6 +44,11 @@ class KeepsService {
         AppState.keeps = res.data.map(pojo => new Keep(pojo))
     }
 
+    async deleteKeep(keepId) {
+        const response = await api.delete(`api/keeps/${keepId}`)
+        logger.log('destroyed keep', response.data)
+    }
+
 }
 
 export const keepsService = new KeepsService()

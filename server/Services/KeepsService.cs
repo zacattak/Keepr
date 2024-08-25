@@ -39,7 +39,17 @@ public class KeepsService
     internal Keep EditKeep(Keep updateData, int keepId, string userId)
     {
         // FIXME I shouldnt be able to edit someone elses keep
+
+
+
         Keep originalKeep = GetKeepById(keepId, userId);
+
+        if (originalKeep.CreatorId != userId)
+        {
+
+            throw new Exception("You don't have permission to delete this!");
+
+        }
         originalKeep.Name = updateData.Name?.Length > 0 ? updateData.Name : originalKeep.Name;
         originalKeep.Description = updateData.Description?.Length > 0 ? updateData.Description : originalKeep.Description;
         originalKeep.Img = updateData.Img?.Length > 0 ? updateData.Img : originalKeep.Img;

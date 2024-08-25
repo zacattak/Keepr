@@ -1,20 +1,24 @@
 <template>
+    <section v-if="vault" class="container-fluid">
 
-    <h1>vault details page</h1>
+        <div class="row">
+            <div class="col-12">
+                <h1>vault details page</h1>
+                <h1>{{ vault.name }}</h1>
+            </div>
+        </div>
 
-    <h1>{{ vault.name }}</h1>
-
-    <div v-for="keep in keeps" :key="keep.id" class="col-9 col-md-3 m-2 card mb-2 mt-2">
-
-        <KeepComponent :keep="keep" />
-
-        <p>adfafdas</p>
-    </div>
+        <div class="row">
+            <div v-for="keep in keeps" :key="keep.id" class="col-9 col-md-3 m-2 card mb-2 mt-2">
+                <KeepComponent :keep="keep" />
+            </div>
+        </div>
+    </section>
 </template>
 
 
 <script>
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { logger } from '../utils/Logger';
 import Pop from '../utils/Pop';
 import { computed, onMounted } from 'vue';
@@ -41,7 +45,7 @@ export default {
                 await vaultsService.getVaultById(vaultId)
             }
             catch (error) {
-                Pop.error(error);
+                useRouter().push('/')
             }
         }
 

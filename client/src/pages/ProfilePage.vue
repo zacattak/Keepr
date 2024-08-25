@@ -1,8 +1,8 @@
 <template>
   <div class="container-fluid bg-info">
 
-    <section class="row d-flex justify-content-evenly">
-      <!-- 
+
+    <!-- 
       <div class="d-flex justify-content-center">
 
         <h1>Welcome {{ account.name }}</h1>
@@ -17,26 +17,26 @@
       </div> -->
 
 
+    <div class="row">
       <div class="col-12">
-
         <p>this is your profile page, I need to try to get vaults page working in time so it looks mid right now</p>
       </div>
+    </div>
 
+    <div class="row">
+      <h3>Keeps</h3>
       <div v-for="keep in keeps" :key="keep.id" class="col-9 col-md-3 m-2 card mb-2 mt-2">
-
         <KeepComponent :keep="keep" />
-
-        <p>adfafdas</p>
       </div>
 
-      <div class="col-12">
-
-        <p>asdfasdf</p>
+    </div>
+    <div class="row">
+      <h3>Vaults</h3>
+      <div v-for="vault in vaults" :key="vault.id" class="col-9 col-md-3 m-2 card mb-2 mt-2">
+        <VaultComponent :vault="vault" />
       </div>
+    </div>
 
-
-
-    </section>
   </div>
 </template>
 

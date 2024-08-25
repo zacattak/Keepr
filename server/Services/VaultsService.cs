@@ -68,7 +68,7 @@ public class VaultsService
     internal List<Vault> GetVaultsByAccountId(string accountId, string userId)
     {
         // FIXME makes sure we are only sendind private vaults to the creator (HELP REVIESWS)
-
+        //this is still broken
 
         List<Vault> vaults = _repository.GetVaultsByAccountId(accountId);
 

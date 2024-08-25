@@ -6,6 +6,7 @@
   <main>
     <router-view />
   </main>
+  <KeepModal />
   <!-- <footer>
 
   </footer> -->

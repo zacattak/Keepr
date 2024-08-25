@@ -9,7 +9,6 @@
       </div>
 
     </section>
-    <KeepModal />
   </div>
 </template>
 

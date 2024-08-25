@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Extensions.Configuration.UserSecrets;
+
 namespace Keepr.Services;
 
 public class VaultKeepsService
@@ -16,7 +19,10 @@ public class VaultKeepsService
         // FIXME get vault first to see if I am the creator of it (CRATE REPORT ON RESTAURANT REVIEWS)
         Vault vault = _vaultsService.GetVaultById(vaultKeepData.VaultId, vaultKeepData.CreatorId);
 
-
+        if (vault.CreatorId != vaultKeepData.CreatorId)
+        {
+            throw new Exception("No Permission to delete!");
+        }
         VaultKeep vaultKeep = _repository.CreateVaultKeep(vaultKeepData);
         return vaultKeep;
     }

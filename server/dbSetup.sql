@@ -19,3 +19,5 @@ ALTER TABLE accounts ADD coverImg varchar(255);
 SELECT keep.*, account.*
 FROM keeps keep
     JOIN accounts account ON keep.creatorId = account.id;
+
+update keeps kept set kept = 0;
