@@ -1,9 +1,15 @@
 <template>
-    <div v-for="vault in vaults" :key="vault.id" class="col-9 col-md-3 m-2 card mb-2 mt-2">
 
-        <VaultComponent :vault="vault" />
+    <section class="container-fluid bg-info">
 
-    </div>
+        <div v-for="vault in vaults" :key="vault.id" class="col-9 col-md-3 m-2 card mb-2 mt-2">
+
+            <VaultComponent :vault="vault" />
+
+        </div>
+
+    </section>
+
 </template>
 
 
@@ -70,4 +76,10 @@ export default {
 </script>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.card {
+    border: 2px solid black;
+    border-radius: 16px;
+    box-shadow: 3px 3px 10px rgba(42, 6, 134, 0.31);
+}
+</style>
