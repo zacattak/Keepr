@@ -6,7 +6,11 @@
             <h2 class="text-center">{{ keep.name }}</h2>
             <img :src="keep.img" :alt="keep.name" class="img">
         </div>
-        <button @click="deleteKeep(keepId)" type="button" class="btn btn-primary">DELETE</button>
+        <!-- <div v-if="keep.creatorId == account.id">
+
+            <button @click="deleteKeep(keepId)" type="button" class="btn btn-primary">DELETE</button>
+        </div> -->
+
     </section>
 
 </template>

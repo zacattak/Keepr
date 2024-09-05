@@ -33,10 +33,10 @@ public class AccountService
     return _repo.Edit(original);
   }
 
-  internal Account GetProfileById(string accountId)
+  internal Account GetProfileById(string profileId)
   // string userId
   {
-    Account account = _repo.GetProfileById(accountId);
+    Account account = _repo.GetProfileById(profileId);
 
     return account;
   }

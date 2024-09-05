@@ -55,9 +55,9 @@ export default {
     const route = useRoute();
     async function getAccountById() {
       try {
-        const accountId = route.params.accountId;
-        logger.log('id had', accountId);
-        await accountService.getAccountById(accountId);
+        const profileId = route.params.profileId;
+        logger.log('id had', profileId);
+        await accountService.getAccountById(profileId);
       }
       catch (error) {
         Pop.error(error);
@@ -66,9 +66,9 @@ export default {
 
     async function getVaultsByAccountId() {
       try {
-        const accountId = route.params.accountId;
-        logger.log('fetching', accountId)
-        await vaultsService.getVaultsByAccountId(accountId)
+        const profileId = route.params.profileId;
+        logger.log('fetching', profileId)
+        await vaultsService.getVaultsByAccountId(profileId)
       }
       catch (error) {
         Pop.error(error);
@@ -77,9 +77,9 @@ export default {
 
     async function getKeepsByAccountId() {
       try {
-        const accountId = route.params.accountId;
-        logger.log('fetching keeps', accountId)
-        await keepsService.getKeepsByAccountId(accountId)
+        const profileId = route.params.profileId;
+        logger.log('fetching keeps', profileId)
+        await keepsService.getKeepsByAccountId(profileId)
       }
       catch (error) {
         Pop.error(error);

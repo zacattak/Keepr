@@ -65,12 +65,12 @@ public class VaultsService
         return vaults;
     }
 
-    internal List<Vault> GetVaultsByAccountId(string accountId, string userId)
+    internal List<Vault> GetVaultsByAccountId(string profileId, string userId)
     {
         // FIXME makes sure we are only sendind private vaults to the creator (HELP REVIESWS)
         //this is still broken
 
-        List<Vault> vaults = _repository.GetVaultsByAccountId(accountId);
+        List<Vault> vaults = _repository.GetVaultsByAccountId(profileId);
 
         vaults = vaults.FindAll(vault => vault.IsPrivate == false || vault.CreatorId == userId);
 

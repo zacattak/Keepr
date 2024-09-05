@@ -17,7 +17,9 @@
 
 
                     <RouterLink class="selectable" data-dismiss="keepModal"
-                        :to="{ name: 'Profile', params: { accountId: account.id } }">
+                        :to="{ name: 'Profile', params: { profileId: activeKeep.creatorId } }">
+                        <!-- :to="{ name: 'Profile', params: { accountId: account.id } }"> -->
+
                         <img :src="activeKeep.creator.picture" :alt="activeKeep.creator.name" class="creatorImg">
                         <!-- <ul v-for="ingredient in recipeIngredients" :key="ingredient.id">
                         {{ ingredient.name }} | {{ ingredient.quantity }}

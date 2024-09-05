@@ -26,8 +26,8 @@ class VaultsService {
         return privateVault
     }
 
-    async getVaultsByAccountId(accountId) {
-        const res = await api.get(`api/profiles/${accountId}/vaults`)
+    async getVaultsByAccountId(profileId) {
+        const res = await api.get(`api/profiles/${profileId}/vaults`)
         // api/profiles/${accountId}/vaults
 
         //note this is probably where my problem lies, working on profile page because of route params
