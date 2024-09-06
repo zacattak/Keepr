@@ -2,20 +2,21 @@
   <section class="container-fluid bg-info">
 
 
-    <!-- 
+
+    <div v-if="profile != null">
       <div class="d-flex justify-content-center">
 
-        <h1>Welcome {{ account.name }}</h1>
+        <h1>Welcome {{ profile.name }}</h1>
 
 
         <div class="">
-          <img :src="account.coverImg" alt="">
+          <img :src="profile.coverImg" alt="">
         </div>
         <div class="">
-          <img class="rounded" :src="account.picture" alt="" />
+          <img class="rounded" :src="profile.picture" alt="" />
         </div>
-      </div> -->
-
+      </div>
+    </div>
 
     <!-- <div class="row">
       <div class="col-12">
@@ -94,7 +95,7 @@ export default {
 
     })
     return {
-      account: computed(() => AppState.activeAccount),
+      profile: computed(() => AppState.activeAccount),
       vaults: computed(() => AppState.vaults),
       keeps: computed(() => AppState.keeps)
       // activeKeep
