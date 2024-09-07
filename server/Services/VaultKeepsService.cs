@@ -7,11 +7,13 @@ public class VaultKeepsService
 {
     private readonly VaultKeepsRepository _repository;
     private readonly VaultsService _vaultsService;
+    private readonly KeepsService _keepsService;
 
-    public VaultKeepsService(VaultKeepsRepository repository, VaultsService vaultsService)
+    public VaultKeepsService(VaultKeepsRepository repository, VaultsService vaultsService, KeepsService keepsService)
     {
         _repository = repository;
         _vaultsService = vaultsService;
+        _keepsService = keepsService;
     }
 
     internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
@@ -21,9 +23,14 @@ public class VaultKeepsService
 
         if (vault.CreatorId != vaultKeepData.CreatorId)
         {
-            throw new Exception("No Permission to delete!");
+            throw new Exception("You don't have permission!");
         }
+
+        int keepId = vaultKeepData.KeepId;
+        _keepsService.KeptKeep(keepId);
         VaultKeep vaultKeep = _repository.CreateVaultKeep(vaultKeepData);
+
+        // VaultKeep vaultKeep = _repository.CreateVaultKeep(vaultKeepData);
         return vaultKeep;
     }
 
