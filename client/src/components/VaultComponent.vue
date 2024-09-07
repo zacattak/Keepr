@@ -20,11 +20,11 @@
             <p>{{ vault.description }}</p>
         </div>
 
-        <div class="text-center" v-if="account.id == vault.creatorId">
+        <!-- <div class="text-center" v-if="account.id == vault.creatorId">
 
             <button @click="deleteVault(vaultId)" type="button" class="btn btn-primary">DELETE</button>
 
-        </div>
+        </div> -->
 
     </section>
 
@@ -36,6 +36,8 @@
 import { computed } from 'vue';
 import { Vault } from '../models/Vault';
 import { AppState } from '../AppState';
+import { vaultsService } from '../services/VaultsService';
+import Pop from "../utils/Pop.js";
 
 export default {
     props: {
@@ -46,13 +48,21 @@ export default {
 
 
             vaults: computed(() => AppState.accountVaults),
+            // vaultId: computed(() => AppState.activeVault),
             account: computed(() => AppState.account),
 
 
 
-            async deleteVault(vaultId) {
-
-            }
+            // async deleteVault(vaultId) {
+            //     try {
+            //         const yes = await Pop.confirm()
+            //         if (!yes) return
+            //         await vaultsService.deleteVault(vaultId)
+            //     }
+            //     catch (error) {
+            //         Pop.error(error);
+            //     }
+            // }
         }
     }
 }

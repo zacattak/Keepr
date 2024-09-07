@@ -5,6 +5,18 @@
             <div class="col-12">
                 <h1>vault details page</h1>
                 <h1>{{ vault.name }}</h1>
+                <div>
+
+
+                    <img :src="vault.img" :alt="vault.name" class="img-fluid">
+
+                </div>
+                <div v-if="account.id == vault.creatorId">
+
+                    <button @click="deleteVault(vault.id, vault.creatorId)" type="button"
+                        class="btn btn-primary">DELETE</button>
+
+                </div>
             </div>
         </div>
 
@@ -26,9 +38,11 @@ import { AppState } from '../AppState';
 import { keepsService } from '../services/KeepsService';
 import { vaultsService } from '../services/VaultsService';
 
+
 export default {
     setup() {
         const route = useRoute();
+        const router = useRouter();
         async function getKeepsByVaultId() {
             try {
                 const vaultId = route.params.vaultId
@@ -49,14 +63,41 @@ export default {
             }
         }
 
+
         onMounted(() => {
             getKeepsByVaultId();
             getVaultById();
         })
         return {
             keeps: computed(() => AppState.keeps),
-            vault: computed(() => AppState.activeVault)
+            vault: computed(() => AppState.activeVault),
+            account: computed(() => AppState.account),
+
+            async deleteVault(vaultId, profileId) {
+                try {
+                    const yes = await Pop.confirm()
+                    if (!yes) return
+
+                    await vaultsService.deleteVault(vaultId)
+                    router.push({ name: 'Profile', params: { profileId: profileId } })
+                }
+                catch (error) {
+                    Pop.error(error);
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
         }
+
     }
 }
 </script>
