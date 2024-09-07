@@ -3,7 +3,7 @@
     <section class="row d-flex justify-content-center">
         <div>
             <!-- <p class="mb-0 text-center">Views:{{ keep.views }} Kept:{{ keep.kept }}</p> -->
-            <p>render check</p>
+            <!-- <p>render check</p> -->
             <h2 class="text-center">{{ vault.name }}</h2>
 
 
@@ -20,7 +20,12 @@
             <p>{{ vault.description }}</p>
         </div>
 
-        <button @click="deleteVault(vaultId)" type="button" class="btn btn-primary">DELETE</button>
+        <div class="text-center" v-if="account.id == vault.creatorId">
+
+            <button @click="deleteVault(vaultId)" type="button" class="btn btn-primary">DELETE</button>
+
+        </div>
+
     </section>
 
 
@@ -41,6 +46,7 @@ export default {
 
 
             vaults: computed(() => AppState.accountVaults),
+            account: computed(() => AppState.account),
 
 
 

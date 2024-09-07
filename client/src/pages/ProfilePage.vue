@@ -6,7 +6,7 @@
     <div v-if="profile != null">
       <div class="d-flex justify-content-center">
 
-        <h1>Welcome {{ profile.name }}</h1>
+        <h1>Welcome to {{ profile.name }}'s profile!</h1>
 
 
         <div class="">
