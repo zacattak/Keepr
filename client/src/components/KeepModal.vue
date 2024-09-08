@@ -1,7 +1,7 @@
 <template>
     <div class="modal fade" id="keepModal" tabindex="-1" role="dialog" aria-labelledby="keepModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div v-if="activeKeep" class="modal-content">
+            <div v-if="keep" class="modal-content">
                 <!-- <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -9,22 +9,27 @@
                     </button>
                 </div> -->
                 <div class="modal-body">
-                    <img :src="activeKeep.img" :alt="activeKeep.name" class="img">
-                    <h2 class="text-center">{{ activeKeep.name }}</h2>
-                    <p>{{ activeKeep.description }}</p>
+                    <img :src="keep.img" :alt="keep.name" class="img">
+                    <h2 class="text-center">{{ keep.name }}</h2>
+                    <p>{{ keep.description }}</p>
 
-                    <p>Views:{{ activeKeep.views }} Kept:{{ activeKeep.kept }} </p>
+                    <p>Views:{{ keep.views }} Kept:{{ keep.kept }} </p>
 
 
                     <RouterLink class="selectable" data-dismiss="keepModal"
-                        :to="{ name: 'Profile', params: { profileId: activeKeep.creatorId } }">
+                        :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
                         <!-- :to="{ name: 'Profile', params: { accountId: account.id } }"> -->
 
-                        <img :src="activeKeep.creator.picture" :alt="activeKeep.creator.name" class="creatorImg">
+                        <img :src="keep.creator.picture" :alt="keep.creator.name" class="creatorImg">
                         <!-- <ul v-for="ingredient in recipeIngredients" :key="ingredient.id">
                         {{ ingredient.name }} | {{ ingredient.quantity }}
                     </ul> -->
                     </RouterLink>
+                    <!-- <div v-if="account.id == keep.creatorId">
+
+                        <button @click="deleteKeep(keep.id)" type="button" class="btn btn-primary">DELETE</button>
+
+                    </div> -->
                 </div>
                 <div class="modal-footer">
 
@@ -72,12 +77,10 @@ import { logger } from '../utils/Logger';
 
 
 export default {
-    // props: {
-    //     vault: { type: Vault, required: true }
-    // },
+
     props: {
         account: { type: Account },
-        // vault: { type: Vault, required: true }
+
     },
     setup() {
 
@@ -85,10 +88,13 @@ export default {
         // onMounted(getVaults)
         const activeKeep = computed(() => AppState.activeKeep)
 
+
+
         return {
             editableVaultKeepData,
             vaults: computed(() => AppState.accountVaults),
             account: computed(() => AppState.account),
+            keep: computed(() => AppState.activeKeep),
             activeKeep,
             // activeVault,
             async createVaultKeep(vault) {
