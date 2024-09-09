@@ -22,7 +22,9 @@
 
         <div class="row">
             <div v-for="keep in keeps" :key="keep.id" class="col-9 col-md-3 m-2 card mb-2 mt-2">
-                <KeepComponent :keep="keep" />
+                <VaultKeepComponent :vaultKeep="keep" />
+                <!-- :keep="keep" :vaultKeepId="keep.vaultKeepId" -->
+
             </div>
         </div>
     </section>
@@ -37,17 +39,18 @@ import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState';
 import { keepsService } from '../services/KeepsService';
 import { vaultsService } from '../services/VaultsService';
+import { vaultKeepsService } from '../services/VaultKeepsService'
 
 
 export default {
     setup() {
         const route = useRoute();
         const router = useRouter();
-        async function getKeepsByVaultId() {
+        async function getVaultKeepsByVaultId() {
             try {
                 const vaultId = route.params.vaultId
                 logger.log('fetching keeps', vaultId)
-                await keepsService.getKeepsByVaultId(vaultId)
+                await vaultKeepsService.getVaultKeepsByVaultId(vaultId)
             }
             catch (error) {
                 Pop.error(error);
@@ -65,11 +68,11 @@ export default {
 
 
         onMounted(() => {
-            getKeepsByVaultId();
+            getVaultKeepsByVaultId();
             getVaultById();
         })
         return {
-            keeps: computed(() => AppState.keeps),
+            keeps: computed(() => AppState.vaultKeeps),
             vault: computed(() => AppState.activeVault),
             account: computed(() => AppState.account),
 
@@ -84,7 +87,17 @@ export default {
                 catch (error) {
                     Pop.error(error);
                 }
-            }
+            },
+
+            // async deleteVaultKeep(vaultKeepId) {
+            //     try {
+            //         const yes = await Pop.confirm()
+            //         if (!yes) return
+            //         await vaultKeepsService.deleteVaultKeep(vaultKeepId)
+            //     } catch (error) {
+            //         Pop.error(error);
+            //     }
+            // }
 
 
 

@@ -2,12 +2,7 @@
     <div class="modal fade" id="keepModal" tabindex="-1" role="dialog" aria-labelledby="keepModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div v-if="keep" class="modal-content">
-                <!-- <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div> -->
+
                 <div class="modal-body">
                     <img :src="keep.img" :alt="keep.name" class="img">
                     <h2 class="text-center">{{ keep.name }}</h2>
@@ -18,12 +13,9 @@
 
                     <RouterLink class="selectable" data-dismiss="keepModal"
                         :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
-                        <!-- :to="{ name: 'Profile', params: { accountId: account.id } }"> -->
 
                         <img :src="keep.creator.picture" :alt="keep.creator.name" class="creatorImg">
-                        <!-- <ul v-for="ingredient in recipeIngredients" :key="ingredient.id">
-                        {{ ingredient.name }} | {{ ingredient.quantity }}
-                    </ul> -->
+
                     </RouterLink>
                     <!-- <div v-if="account.id == keep.creatorId">
 
@@ -38,7 +30,7 @@
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                Dropdown button
+                                Add Keep to Vault
                             </button>
 
                             <ul class="dropdown-menu">
@@ -51,6 +43,24 @@
                             </ul>
                         </div>
                     </form>
+
+                    <!-- <form action="">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Dropdown button
+                            </button>
+
+                            <ul class="dropdown-menu">
+                                <div class="form-select" aria-label="Select a Vault" required>
+                                    <li v-for="vault in vaults" :key="vault.id" :value="vault.id" class="dropdown-item"
+                                        @click="deleteVaultKeep(vault)">
+                                        {{ vault.name }}
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                    </form> -->
 
                     <!-- <button v-if="account.id" @click="createVaultKeep(activeKeep.id)" type="button"
                         class="btn btn-primary">Add to Vault</button> -->
@@ -114,7 +124,17 @@ export default {
                 catch (error) {
                     Pop.error(error);
                 }
-            }
+            },
+
+            // async deleteVaultKeep(vaultKeepId) {
+            //     try {
+            //         const yes = await Pop.confirm()
+            //         if (!yes) return
+            //         await vaultKeepsService.deleteVaultKeep(vaultKeepId)
+            //     } catch (error) {
+            //         Pop.error(error);
+            //     }
+            // }
 
 
             // getVaults() {
@@ -126,15 +146,6 @@ export default {
             //     }
             // }
 
-
-
-
-
-
-
-
-
-            // async createVaultKeep()
         }
     },
     components: { VaultListComponent }
