@@ -2,7 +2,7 @@
 
     <section class="row d-flex justify-content-center">
         <div @click="getVaultKeepById()" class="selectable" type="button" data-bs-toggle="modal"
-            data-bs-target="#keepModal">
+            data-bs-target="#vaultKeepModal">
             <p class="mb-0 text-center">Views:{{ vaultKeep.views }} Kept:{{ vaultKeep.kept }}</p>
             <h2 class="text-center">{{ vaultKeep.name }}</h2>
             <img :src="vaultKeep.img" :alt="vaultKeep.name" class="img">

@@ -16,7 +16,7 @@ public class VaultKeepsService
         _keepsService = keepsService;
     }
 
-    internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
+    internal KeepClone CreateVaultKeep(VaultKeep vaultKeepData)
     {
         // FIXME get vault first to see if I am the creator of it (CRATE REPORT ON RESTAURANT REVIEWS)
         Vault vault = _vaultsService.GetVaultById(vaultKeepData.VaultId, vaultKeepData.CreatorId);
@@ -28,8 +28,8 @@ public class VaultKeepsService
 
         int keepId = vaultKeepData.KeepId;
         _keepsService.KeptKeep(keepId);
-        VaultKeep vaultKeep = _repository.CreateVaultKeep(vaultKeepData);
-
+        KeepClone vaultKeep = _repository.CreateVaultKeep(vaultKeepData);
+        //ANCHOR KeepClone vaultKeep 
         // VaultKeep vaultKeep = _repository.CreateVaultKeep(vaultKeepData);
         return vaultKeep;
     }
@@ -41,9 +41,9 @@ public class VaultKeepsService
         return keepClones;
     }
 
-    internal VaultKeep FindVaultKeepById(int vaultKeepId)
+    internal KeepClone GetVaultKeepById(int vaultKeepId)
     {
-        VaultKeep vaultKeep = _repository.FindVaultKeepById(vaultKeepId);
+        KeepClone vaultKeep = _repository.GetVaultKeepById(vaultKeepId);
         if (vaultKeep == null)
         {
             throw new Exception($"Invalid ID: {vaultKeepId}");
@@ -53,7 +53,7 @@ public class VaultKeepsService
 
     internal string DeleteVaultKeep(string userId, int vaultKeepId)
     {
-        VaultKeep vaultKeep = FindVaultKeepById(vaultKeepId);
+        KeepClone vaultKeep = GetVaultKeepById(vaultKeepId);
         if (userId != vaultKeep.CreatorId)
         {
             throw new Exception("No Permission to delete!");

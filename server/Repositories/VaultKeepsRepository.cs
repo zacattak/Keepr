@@ -52,7 +52,7 @@ public class VaultKeepsRepository
     //     return keepClone;
     // }
 
-    internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
+    internal KeepClone CreateVaultKeep(VaultKeep vaultKeepData)
     {
         string sql = @"
         INSERT INTO 
@@ -61,8 +61,8 @@ public class VaultKeepsRepository
         SELECT * FROM vaultKeeps WHERE id = LAST_INSERT_ID()
         ;";
 
-        VaultKeep vaultKeep = _db.Query<VaultKeep>(sql, vaultKeepData).FirstOrDefault();
-        return vaultKeep;
+        KeepClone keepClone = _db.Query<KeepClone>(sql, vaultKeepData).FirstOrDefault();
+        return keepClone;
     }
 
 
@@ -92,10 +92,10 @@ public class VaultKeepsRepository
 
     }
 
-    internal VaultKeep FindVaultKeepById(int vaultKeepId)
+    internal KeepClone GetVaultKeepById(int vaultKeepId)
     {
         string sql = @"SELECT * FROM vaultKeeps WHERE id = @vaultKeepId;";
-        VaultKeep vaultKeep = _db.Query<VaultKeep>(sql, new { vaultKeepId }).FirstOrDefault();
+        KeepClone vaultKeep = _db.Query<KeepClone>(sql, new { vaultKeepId }).FirstOrDefault();
         return vaultKeep;
     }
 

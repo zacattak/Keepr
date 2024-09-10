@@ -23,7 +23,7 @@
         <div class="row">
             <div v-for="keep in keeps" :key="keep.id" class="col-9 col-md-3 m-2 card mb-2 mt-2">
                 <VaultKeepComponent :vaultKeep="keep" />
-                <!-- :keep="keep" :vaultKeepId="keep.vaultKeepId" -->
+
 
             </div>
         </div>

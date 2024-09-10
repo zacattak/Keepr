@@ -27,7 +27,7 @@ public class VaultKeepsController : ControllerBase
 
             vaultKeepData.CreatorId = userInfo.Id;
 
-            VaultKeep vaultKeep = _vaultKeepsService.CreateVaultKeep(vaultKeepData);
+            KeepClone vaultKeep = _vaultKeepsService.CreateVaultKeep(vaultKeepData);
 
             return Ok(vaultKeep);
         }
@@ -37,6 +37,22 @@ public class VaultKeepsController : ControllerBase
             return BadRequest(exception.Message);
         }
 
+    }
+
+    [HttpGet("{vaultKeepId}")]
+    public async Task<ActionResult<VaultKeep>> GetVaultKeepById(int vaultKeepId)
+    {
+        try
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            KeepClone vaultKeep = _vaultKeepsService.GetVaultKeepById(vaultKeepId);
+            return Ok(vaultKeep);
+        }
+        catch (Exception exception)
+        {
+
+            return BadRequest(exception.Message);
+        }
     }
 
     [HttpDelete("{vaultKeepId}")]
