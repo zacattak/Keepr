@@ -22,7 +22,13 @@
 
         <div class="row">
             <div v-for="keep in keeps" :key="keep.id" class="col-9 col-md-3 m-2 card mb-2 mt-2">
-                <VaultKeepComponent :vaultKeep="keep" />
+                <VaultKeepComponent :keep="keep" :vaultKeepId="keep.vaultKeepId" />
+
+
+
+
+
+
 
 
             </div>
@@ -50,6 +56,7 @@ export default {
             try {
                 const vaultId = route.params.vaultId
                 logger.log('fetching keeps', vaultId)
+
                 await vaultKeepsService.getVaultKeepsByVaultId(vaultId)
             }
             catch (error) {
@@ -59,6 +66,7 @@ export default {
         async function getVaultById() {
             try {
                 const vaultId = route.params.vaultId
+
                 await vaultsService.getVaultById(vaultId)
             }
             catch (error) {
@@ -88,6 +96,7 @@ export default {
                     Pop.error(error);
                 }
             },
+
 
             // async deleteVaultKeep(vaultKeepId) {
             //     try {

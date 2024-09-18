@@ -43,18 +43,19 @@ public class VaultKeepsService
 
     internal KeepClone GetVaultKeepById(int vaultKeepId)
     {
-        KeepClone vaultKeep = _repository.GetVaultKeepById(vaultKeepId);
-        if (vaultKeep == null)
+        KeepClone keepClone = _repository.GetVaultKeepById(vaultKeepId);
+        if (keepClone == null)
         {
-            throw new Exception($"Invalid ID: {vaultKeepId}");
+            throw new Exception($"Invalid Kept Keep id: {vaultKeepId}");
+
         }
-        return vaultKeep;
+        return keepClone;
     }
 
     internal string DeleteVaultKeep(string userId, int vaultKeepId)
     {
-        KeepClone vaultKeep = GetVaultKeepById(vaultKeepId);
-        if (userId != vaultKeep.CreatorId)
+        KeepClone keepClone = GetVaultKeepById(vaultKeepId);
+        if (userId != keepClone.CreatorId)
         {
             throw new Exception("No Permission to delete!");
         }

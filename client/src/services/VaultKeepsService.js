@@ -1,6 +1,6 @@
 import { AppState } from "../AppState.js";
 import { Keep } from "../models/Keep.js";
-import { VaultKeep } from "../models/VaultKeep.js";
+import { KeepClone } from "../models/KeepClone.js";
 import { logger } from "../utils/Logger.js";
 import { api } from "./AxiosService.js";
 
@@ -9,7 +9,7 @@ class VaultKeepsService {
     async createVaultKeep(vaultKeepData) {
         const response = await api.post('api/vaultKeeps', vaultKeepData)
         logger.log('created vaultKeep', response.data)
-        const newVaultKeep = new VaultKeep(response.data)
+        const newVaultKeep = new KeepClone(response.data)
 
         // if (AppState.activeAccount?.id == newVaultKeep.creatorId) {
         //     AppState.vaultKeeps.push(newVaultKeep)
@@ -22,16 +22,23 @@ class VaultKeepsService {
         AppState.vaultKeeps = []
         const response = await api.get(`api/vaults/${vaultId}/keeps`);
         logger.log('vaults keeps had', response.data);
-        const keeps = response.data.map(pojo => new VaultKeep(pojo));
+        const keeps = response.data.map(pojo => new KeepClone(pojo));
         AppState.vaultKeeps = keeps
 
     }
 
 
-    async getVaultKeepById(vaultKeepId) {
-        const res = await api.get(`api/vaultKeeps/${vaultKeepId}`)
-        logger.log('GOT VAULT KEEP', res.data)
-        AppState.activeVaultKeep = new VaultKeep(res.data)
+    // async getVaultKeepById(vaultKeepId) {
+    //     const response = await api.get(`api/vaultKeeps/${vaultKeepId}`)
+    //     logger.log('GOT VAULT KEEP', response.data)
+    //     // AppState.activeVaultKeep = vaultKeepId
+
+    // }
+    getVaultKeepById(vaultKeepId) {
+
+        AppState.activeVaultKeep = vaultKeepId
+        logger.log('vault keep had', { vaultKeepId })
+
     }
 
 

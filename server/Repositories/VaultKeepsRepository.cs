@@ -61,7 +61,25 @@ public class VaultKeepsRepository
         SELECT * FROM vaultKeeps WHERE id = LAST_INSERT_ID()
         ;";
 
+        // SELECT * FROM vaultKeeps vaultKeep
+        // JOIN keeps keep ON keep.id = vaultKeep.keepId
+        // JOIN accounts account ON account.id = keep.creatorId
+        // WHERE vaultKeep.id = LAST_INSERT_ID();";
+
+
+
         KeepClone keepClone = _db.Query<KeepClone>(sql, vaultKeepData).FirstOrDefault();
+        // KeepClone keepClone = _db.Query<VaultKeep, KeepClone, Account, KeepClone>(sql, (vaultKeep, keep, account) =>
+        // {
+        //     keep.Id = vaultKeep.Id;
+        //     keep.KeepId = vaultKeep.KeepId;
+        //     keep.VaultKeepId = vaultKeep.Id;
+        //     keep.VaultId = vaultKeep.VaultId;
+        //     keep.CreatorId = vaultKeep.CreatorId;
+        //     keep.Creator = account;
+        //     // keep.
+        //     return keep;
+        // }, vaultKeepData).FirstOrDefault();
         return keepClone;
     }
 
@@ -94,10 +112,33 @@ public class VaultKeepsRepository
 
     internal KeepClone GetVaultKeepById(int vaultKeepId)
     {
-        string sql = @"SELECT * FROM vaultKeeps WHERE id = @vaultKeepId;";
-        KeepClone vaultKeep = _db.Query<KeepClone>(sql, new { vaultKeepId }).FirstOrDefault();
+        // string sql = @"SELECT * FROM vaultKeeps WHERE id = @vaultKeepId;";
+        // KeepClone keepClone = _db.Query<KeepClone>(sql, new { vaultKeepId }).FirstOrDefault();
+        // return keepClone;
+
+
+        string sql = @"
+        SELECT 
+        vaultKeep.*,
+        keep.*,
+        account.*
+        FROM vaultKeeps vaultKeep
+        JOIN keeps keep ON keep.id = vaultKeep.keepId
+        JOIN accounts account ON account.id = keep.creatorId
+        WHERE vaultKeep.id = @vaultKeepId;";
+        KeepClone vaultKeep = _db.Query<VaultKeep, KeepClone, Account, KeepClone>(sql, (vaultKeep, keep, account) =>
+        {
+            keep.KeepId = vaultKeep.KeepId;
+            keep.VaultKeepId = vaultKeep.Id;
+            keep.VaultId = vaultKeep.VaultId;
+            keep.CreatorId = vaultKeep.CreatorId;
+            keep.Creator = account;
+            return keep;
+        }, new { vaultKeepId }).FirstOrDefault();
+
         return vaultKeep;
     }
+
 
     internal void DeleteVaultKeep(int vaultKeepId)
     {
