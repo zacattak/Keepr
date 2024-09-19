@@ -61,7 +61,7 @@ export default {
 
 
 
-            getKeepById(keepId, vaultKeepId) {
+            getKeepById(keepId) {
                 try {
                     keepsService.getKeepById(keepId)
                     // vaultKeepsService.getVaultKeepById(vaultKeepId)
