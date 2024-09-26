@@ -156,6 +156,14 @@ export default {
     /* Ensures the container occupies the full viewport height */
 }
 
+img {
+    max-width: 100%;
+    max-height: 40vh;
+    /* Adjust as needed */
+    object-fit: contain;
+
+}
+
 /* For tablets (medium screens), show 2 columns */
 @media (max-width: 768px) {
     .masonry {
