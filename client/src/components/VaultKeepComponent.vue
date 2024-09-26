@@ -5,7 +5,7 @@
             data-bs-target="#vaultKeepModal">
             <p class="mb-0 text-center">Views:{{ keep.views }} Kept:{{ keep.kept }}</p>
             <h2 class="text-center">{{ keep.name }}</h2>
-            <img :src="keep.img" :alt="keep.name" class="img">
+            <img :src="keep.img" :alt="keep.name" class="img-fluid rounded">
         </div>
         <div v-if="keep.creatorId == account.id">
 

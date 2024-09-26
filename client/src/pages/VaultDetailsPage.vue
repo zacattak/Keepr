@@ -1,14 +1,14 @@
 <template>
-    <section v-if="vault" class="container-fluid">
+    <section v-if="vault" class="container-fluid bg-info">
 
-        <div class="row">
+        <div class="row text-center">
             <div class="col-12">
-                <h1>vault details page</h1>
-                <h1>{{ vault.name }}</h1>
+                <h1>Vault Details Page</h1>
+                <h2>{{ vault.name }}</h2>
                 <div>
 
 
-                    <img :src="vault.img" :alt="vault.name" class="img-fluid">
+                    <img :src="vault.img" :alt="vault.name" class="img-fluid rounded">
 
                 </div>
                 <div v-if="account.id == vault.creatorId">
@@ -20,9 +20,11 @@
             </div>
         </div>
 
-        <div class="row">
-            <div v-for="keep in keeps" :key="keep.id" class="col-9 col-md-3 m-2 card mb-2 mt-2">
-                <VaultKeepComponent :keep="keep" :vaultKeepId="keep.vaultKeepId" />
+        <div v-if="keeps" class="row">
+
+            <div class="masonry">
+                <div v-for="keep in keeps" :key="keep.id" class="">
+                    <VaultKeepComponent :keep="keep" :vaultKeepId="keep.vaultKeepId" />
 
 
 
@@ -31,6 +33,7 @@
 
 
 
+                </div>
             </div>
         </div>
     </section>
@@ -125,4 +128,42 @@ export default {
 </script>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.img {
+    // width: 100%;
+    // object-fit: cover;
+    height: 40vh;
+}
+
+.masonry {
+    column-count: 3;
+    /* Set the number of columns */
+    column-gap: 1rem;
+    /* Adjust gap between columns */
+
+
+}
+
+.masonry>div {
+    break-inside: avoid;
+    /* Prevent the item from breaking between columns */
+    margin-bottom: 1rem;
+    /* Add some spacing between items */
+}
+
+/* For tablets (medium screens), show 2 columns */
+@media (max-width: 768px) {
+    .masonry {
+        column-count: 2;
+        /* Reduce to 2 columns */
+    }
+}
+
+/* For mobile phones (small screens), show 1 column */
+@media (max-width: 576px) {
+    .masonry {
+        column-count: 1;
+        /* Reduce to 1 column */
+    }
+}
+</style>

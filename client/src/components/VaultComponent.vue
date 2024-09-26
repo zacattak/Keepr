@@ -11,7 +11,7 @@
                 <div>
 
 
-                    <img :src="vault.img" :alt="vault.name" class="img-fluid">
+                    <img :src="vault.img" :alt="vault.name" class="img-fluid rounded">
 
                 </div>
             </RouterLink>
