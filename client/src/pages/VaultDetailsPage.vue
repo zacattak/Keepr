@@ -151,6 +151,11 @@ export default {
     /* Add some spacing between items */
 }
 
+.container-fluid {
+    min-height: 100vh;
+    /* Ensures the container occupies the full viewport height */
+}
+
 /* For tablets (medium screens), show 2 columns */
 @media (max-width: 768px) {
     .masonry {
