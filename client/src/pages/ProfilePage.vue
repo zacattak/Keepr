@@ -21,11 +21,6 @@
 
     </div>
 
-    <!-- <div class="row">
-      <div class="col-12">
-        <p>this is your profile page, I need to try to get vaults page working in time so it looks mid right now</p>
-      </div>
-    </div> -->
 
     <div class="row">
       <h1 class="col-12 text-center">Keeps</h1>

@@ -33,50 +33,9 @@ export default {
     setup() {
 
 
-
-
-
-
-        // async function getVaultsByAccountId(accountId) {
-        //     try {
-        //         await vaultsService.getVaultsByAccountId(accountId)
-        //     }
-        //     catch (error) {
-        //         Pop.error(error);
-        //     }
-        // }
-
-
-
-
-
-        // async function getVaultKeepsByAccountId(accountId){
-        //     try {
-        //       await vaultKeepsService.getVaultKeepsByAccountId(accountId)
-        //     }
-        //     catch (error){
-        //       Pop.error(error);
-        //     }
-        // }
-
-        // async function getVaultsByVaultKeepId(vaultKeepId){
-        //     try {
-        //       await vaultsService.getVaultsByVaultKeepId(vaultKeepId)
-        //     }
-        //     catch (error){
-        //       Pop.error(error);
-        //     }
-        // }
-
-
-
-        // watch(() => route.params.accountId, () => {
-        //     getVaultsByAccountId(route.params.accountId)
-        // })
-
         return {
             vaults: computed(() => AppState.accountVaults),
-            // account: computed(() => AppState.account)
+
         }
     },
     components: { VaultComponent }

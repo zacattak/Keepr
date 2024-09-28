@@ -102,18 +102,6 @@ export default {
             },
 
 
-            // async deleteVaultKeep(vaultKeepId) {
-            //     try {
-            //         const yes = await Pop.confirm()
-            //         if (!yes) return
-            //         await vaultKeepsService.deleteVaultKeep(vaultKeepId)
-            //     } catch (error) {
-            //         Pop.error(error);
-            //     }
-            // }
-
-
-
 
 
 

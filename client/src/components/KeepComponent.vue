@@ -14,23 +14,6 @@
     </section>
 
 
-    <!-- <form action="">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Dropdown button
-                            </button>
-
-                            <ul class="dropdown-menu">
-                                <div class="form-select" aria-label="Select a Vault" required>
-                                    <li v-for="vault in vaults" :key="vault.id" :value="vault.id" class="dropdown-item"
-                                        @click="deleteVaultKeep(vault)">
-                                        {{ vault.name }}
-                                    </li>
-                                </div>
-                            </ul>
-                        </div>
-                    </form> -->
 
 </template>
 

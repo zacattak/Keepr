@@ -7,8 +7,6 @@
 
           <!-- <div v-for="keep in keeps" :key="keep.id" class="col-9 col-md-3 m-2 card mb-2 mt-2"> -->
 
-
-
           <KeepComponent :keep="keep" />
 
         </div>
@@ -90,23 +88,4 @@ export default {
     /* Reduce to 1 column */
   }
 }
-
-// .home {
-//   display: grid;
-//   height: 80vh;
-//   place-content: center;
-//   text-align: center;
-//   user-select: none;
-
-//   .home-card {
-//     width: clamp(500px, 50vw, 100%);
-
-//     >img {
-//       height: 200px;
-//       max-width: 200px;
-//       width: 100%;
-//       object-fit: contain;
-//       object-position: center;
-//     }
-//   }
-// }</style>
+</style>

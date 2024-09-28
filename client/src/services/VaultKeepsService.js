@@ -28,12 +28,7 @@ class VaultKeepsService {
     }
 
 
-    // async getVaultKeepById(vaultKeepId) {
-    //     const response = await api.get(`api/vaultKeeps/${vaultKeepId}`)
-    //     logger.log('GOT VAULT KEEP', response.data)
-    //     // AppState.activeVaultKeep = vaultKeepId
 
-    // }
     async getVaultKeepById(vaultKeepId) {
         const res = await api.get(`api/vaultKeeps/${vaultKeepId}`)
         logger.log('vault keep had', res.data)
