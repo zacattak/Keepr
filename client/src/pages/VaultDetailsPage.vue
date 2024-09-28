@@ -11,6 +11,7 @@
                     <img :src="vault.img" :alt="vault.name" class="img-fluid rounded">
 
                 </div>
+                <p>{{ vault.description }}</p>
                 <div v-if="account.id == vault.creatorId">
 
                     <button @click="deleteVault(vault.id, vault.creatorId)" type="button"

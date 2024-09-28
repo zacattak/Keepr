@@ -4,18 +4,21 @@
 
 
     <div v-if="profile != null">
+
+      <div class="">
+        <img :src="profile.coverImg" alt="">
+      </div>
+
       <div class="d-flex justify-content-center">
 
         <h1>Welcome to {{ profile.name }}'s profile!</h1>
 
-
-        <div class="">
-          <img :src="profile.coverImg" alt="">
-        </div>
-        <div class="">
-          <img class="rounded" :src="profile.picture" alt="" />
-        </div>
       </div>
+
+      <div class="text-center">
+        <img class="rounded" :src="profile.picture" alt="" />
+      </div>
+
     </div>
 
     <!-- <div class="row">
@@ -25,16 +28,23 @@
     </div> -->
 
     <div class="row">
-      <h3>Keeps</h3>
-      <div v-for="keep in keeps" :key="keep.id" class="col-9 col-md-3 m-2 card mb-2 mt-2">
-        <KeepComponent :keep="keep" />
+      <h1 class="col-12 text-center">Keeps</h1>
+
+      <div class="masonry">
+
+        <div v-for="keep in keeps" :key="keep.id" class="">
+          <KeepComponent :keep="keep" />
+        </div>
+
       </div>
 
     </div>
     <div class="row">
-      <h3>Vaults</h3>
-      <div v-for="vault in vaults" :key="vault.id" class="col-9 col-md-3 m-2 card mb-2 mt-2">
-        <VaultComponent :vault="vault" />
+      <h1 class="col-12 text-center">Vaults</h1>
+      <div class="masonry">
+        <div v-for="vault in vaults" :key="vault.id" class="">
+          <VaultComponent :vault="vault" />
+        </div>
       </div>
     </div>
 
@@ -107,7 +117,7 @@ export default {
 <style scoped>
 .container-fluid {
   /* background-color: green; */
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .creatorImg {
@@ -125,5 +135,37 @@ export default {
 
 img {
   max-width: 100px;
+}
+
+.masonry {
+  column-count: 3;
+  /* Set the number of columns */
+  column-gap: 1rem;
+  /* Adjust gap between columns */
+
+
+}
+
+.masonry>div {
+  break-inside: avoid;
+  /* Prevent the item from breaking between columns */
+  margin-bottom: 1rem;
+  /* Add some spacing between items */
+}
+
+/* For tablets (medium screens), show 2 columns */
+@media (max-width: 768px) {
+  .masonry {
+    column-count: 2;
+    /* Reduce to 2 columns */
+  }
+}
+
+/* For mobile phones (small screens), show 1 column */
+@media (max-width: 576px) {
+  .masonry {
+    column-count: 1;
+    /* Reduce to 1 column */
+  }
 }
 </style>
