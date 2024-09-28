@@ -34,10 +34,10 @@ class VaultKeepsService {
     //     // AppState.activeVaultKeep = vaultKeepId
 
     // }
-    getVaultKeepById(vaultKeepId) {
-
-        AppState.activeVaultKeep = vaultKeepId
-        logger.log('vault keep had', { vaultKeepId })
+    async getVaultKeepById(vaultKeepId) {
+        const res = await api.get(`api/vaultKeeps/${vaultKeepId}`)
+        logger.log('vault keep had', res.data)
+        AppState.activeVaultKeep = new KeepClone(res.data)
 
     }
 

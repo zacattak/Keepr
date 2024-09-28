@@ -1,15 +1,15 @@
 <template>
-    <div class="modal fade" id="vaultKeepModal" tabindex="-1" role="dialog" aria-labelledby="vaultKeepModal"
+    <div v-if="keep" class="modal fade" id="vaultKeepModal" tabindex="-1" role="dialog" aria-labelledby="vaultKeepModal"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div v-if="vaultKeep" class="modal-content">
+            <div class="modal-content">
 
                 <div class="modal-body">
-                    <img :src="vaultKeep.img" :alt="vaultKeep.name" class="img">
-                    <h2 class="text-center">{{ vaultKeep.name }}</h2>
-                    <p>{{ vaultKeep.description }}</p>
+                    <img :src="keep.img" :alt="keep.name" class="img">
+                    <h2 class="text-center">{{ keep.name }}</h2>
+                    <p>{{ keep.description }}</p>
 
-                    <p>Views:{{ vaultKeep.views }} Kept:{{ vaultKeep.kept }} </p>
+                    <p>Views:{{ keep.views }} Kept:{{ keep.kept }} </p>
 
 
                     <!-- <RouterLink class="selectable" data-dismiss="keepModal"
@@ -68,10 +68,9 @@
 
                     <!-- <VaultListComponent /> -->
 
-                    <div v-if="vaultKeep.creatorId == account.id">
+                    <div v-if="keep.creatorId == account.id">
 
-                        <button @click="deleteVaultKeep(vaultKeep.id)" type="button"
-                            class="btn btn-primary">DELETE</button>
+                        <button @click="deleteVaultKeep(keep.id)" type="button" class="btn btn-primary">DELETE</button>
                     </div>
 
                 </div>
@@ -112,7 +111,7 @@ export default {
             // editableVaultKeepData,
             // vaults: computed(() => AppState.accountVaults),
             account: computed(() => AppState.account),
-            vaultKeep: computed(() => AppState.activeVaultKeep),
+            keep: computed(() => AppState.activeVaultKeep),
             activeVaultKeep,
             // activeVault,
             // async createVaultKeep(vault) {

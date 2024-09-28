@@ -129,11 +129,11 @@ export default {
 
 
 <style lang="scss" scoped>
-.img {
-    // width: 100%;
-    // object-fit: cover;
-    height: 40vh;
-}
+// .img {
+//     // width: 100%;
+//     // object-fit: cover;
+//     height: 40vh;
+// }
 
 .masonry {
     column-count: 3;
@@ -158,7 +158,7 @@ export default {
 
 img {
     max-width: 100%;
-    max-height: 40vh;
+    max-height: 70vh;
     /* Adjust as needed */
     object-fit: contain;
 
