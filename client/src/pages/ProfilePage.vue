@@ -5,9 +5,9 @@
 
     <div v-if="profile != null">
 
-      <div class="">
-        <img :src="profile.coverImg" alt="">
-      </div>
+      <!-- <div class=""> -->
+      <img class="banner-img" :src="profile.coverImg" alt="">
+      <!-- </div> -->
 
       <div class="d-flex justify-content-center">
 
@@ -16,7 +16,7 @@
       </div>
 
       <div class="text-center">
-        <img class="rounded" :src="profile.picture" alt="" />
+        <img class="rounded image" :src="profile.picture" alt="" />
       </div>
 
     </div>
@@ -128,9 +128,29 @@ export default {
   box-shadow: 3px 3px 10px rgba(42, 6, 134, 0.31);
 }
 
-img {
+.image {
   max-width: 100px;
 }
+
+.banner-img {
+  width: 100vw;
+  /* Full width of the viewport */
+  height: 300px;
+  /* Set a fixed height (adjust as needed) */
+  object-fit: cover;
+  /* Ensure the image covers the banner area without distortion */
+  /* display: block; */
+  /* Remove inline spacing */
+  /* position: relative; */
+  /* Ensure it stays in the normal flow or customize as needed */
+  margin: 0;
+
+}
+
+/* body {
+  margin: 0;
+  padding: 0;
+} */
 
 .masonry {
   column-count: 3;
