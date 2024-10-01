@@ -12,7 +12,7 @@ export const AppState = reactive({
 
   vaults: [],
 
-
+  tags: [],
 
   accountVaults: [],
 

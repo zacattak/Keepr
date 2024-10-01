@@ -23,7 +23,7 @@
 
                     </div> -->
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer justify-content-between">
 
 
                     <form action="">
@@ -43,6 +43,29 @@
                             </ul>
                         </div>
                     </form>
+
+
+
+                    <form @submit.prevent="createTag()">
+                        <div class="form-group">
+                            <label for="exampleTag">Create Tag</label>
+                            <input type="text" class="form-control" id="exampleTag" aria-describedby="tagHelp"
+                                placeholder="Tag">
+
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1"
+                                placeholder="Password">
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div> -->
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+
+
 
                     <!-- <form action="">
                         <div class="dropdown">
@@ -77,6 +100,7 @@
 import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState';
 import { vaultsService } from '../services/VaultsService';
+import { tagsService } from '../services/TagsService';
 import Pop from '../utils/Pop';
 import { Vault } from '../models/Vault';
 import { Account } from '../models/Account';
@@ -95,6 +119,8 @@ export default {
     setup() {
 
         const editableVaultKeepData = ref({})
+
+        const editableTagData = ref({ name: '' })
         // onMounted(getVaults)
         const activeKeep = computed(() => AppState.activeKeep)
 
@@ -102,6 +128,7 @@ export default {
 
         return {
             editableVaultKeepData,
+            editableTagData,
             vaults: computed(() => AppState.accountVaults),
             account: computed(() => AppState.account),
             keep: computed(() => AppState.activeKeep),
@@ -125,6 +152,17 @@ export default {
                     Pop.error(error);
                 }
             },
+
+            async createTag() {
+                try {
+                    const tag = await tagsService.createTag(editableTagData.value)
+                    editableTagData.value = { name: '' }
+                    Pop.success(`${tag.name} has been created`)
+                }
+                catch (error) {
+                    Pop.error(error);
+                }
+            }
 
             // async deleteVaultKeep(vaultKeepId) {
             //     try {
