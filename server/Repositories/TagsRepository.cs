@@ -14,10 +14,10 @@ public class TagsRepository
         string sql = @"
         INSERT INTO 
         tags(creatorId, name)
-        VALUES(@CreatorId, @Name)
+        VALUES(@CreatorId, @Name);
 
         SELECT
-        tag.*
+        tag.*,
         account.*
         FROM tags tag
         JOIN accounts account on tag.creatorId = account.id
