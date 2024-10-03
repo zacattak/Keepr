@@ -24,6 +24,9 @@ create TABLE keepTags (
 
 ALTER TABLE accounts ADD coverImg varchar(255);
 
+ALTER TABLE tags 
+CHANGE COLUMN tag name VARCHAR(100) NOT NULL;
+
 SELECT keep.*, account.*
 FROM keeps keep
     JOIN accounts account ON keep.creatorId = account.id;
