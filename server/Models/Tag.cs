@@ -9,7 +9,7 @@ public class Tag
 
     public string CreatorId { get; set; }
 
-    public string name { get; set; }
+    public string Name { get; set; }
 
     public Account Creator { get; set; }
 }
