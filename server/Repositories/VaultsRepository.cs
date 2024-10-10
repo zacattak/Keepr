@@ -43,10 +43,7 @@ public class VaultsRepository
         WHERE vault.id = @vaultId
         ;";
         Vault vault = _db.Query<Vault, Account, Vault>(sql, _populateCreator, new { vaultId }).FirstOrDefault();
-        // {
-        //     vault.Creator = account;
-        //     return vault;
-        // }, new { vaultId }).FirstOrDefault();
+
         return vault;
 
     }
@@ -103,12 +100,11 @@ public class VaultsRepository
         JOIN accounts account ON account.id = vault.creatorId
         WHERE vault.creatorId = @userId
         ;";
-        // JOIN accounts account ON account.id = vault.creatorId
-        // WHERE vault.accountId = @userId
+
         List<Vault> vaults = _db.Query<Vault, Account, Vault>(sql, (vault, account) =>
         {
             vault.Creator = account;
-            // vault.CreatorId = account.Id;
+
             return vault;
         }, new { userId }).ToList();
         return vaults;
@@ -128,7 +124,7 @@ public class VaultsRepository
         List<Vault> vaults = _db.Query<Vault, Account, Vault>(sql, (vault, account) =>
     {
         vault.Creator = account;
-        // vault.CreatorId = account.Id;
+
         return vault;
     }, new { accountId }).ToList();
         return vaults;

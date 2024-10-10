@@ -9,10 +9,13 @@ public class KeepsController : ControllerBase
     private readonly KeepsService _keepsService;
     private readonly Auth0Provider _auth0Provider;
 
-    public KeepsController(KeepsService keepsService, Auth0Provider auth0Provider)
+    private readonly KeepTagsService _keepTagsService;
+
+    public KeepsController(KeepsService keepsService, Auth0Provider auth0Provider, KeepTagsService keepTagsService)
     {
         _keepsService = keepsService;
         _auth0Provider = auth0Provider;
+        _keepTagsService = keepTagsService;
     }
 
     [HttpPost]
@@ -96,6 +99,21 @@ public class KeepsController : ControllerBase
         catch (Exception exception)
         {
 
+            return BadRequest(exception.Message);
+        }
+    }
+
+    [HttpGet("{keepId}/tags")]
+    public async Task<ActionResult<List<TagClone>>> GetKeepTagsByKeepId(int keepId)
+    {
+        try
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            List<TagClone> tags = _keepTagsService.GetKeepTagsByKeepId(keepId);
+            return Ok(tags);
+        }
+        catch (Exception exception)
+        {
             return BadRequest(exception.Message);
         }
     }
