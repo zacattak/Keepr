@@ -42,7 +42,7 @@
 
 
 
-                    <form @submit.prevent="createTag()">
+                    <form @submit.prevent="handleSubmit">
                         <div class="form-group">
                             <label for="exampleTag">Create Tag</label>
                             <input v-model="editableTagData.name" type="text" class="form-control" id="exampleTag"
@@ -70,6 +70,7 @@ import { Account } from '../models/Account';
 import VaultListComponent from '../components/VaultListComponent.vue';
 import { vaultKeepsService } from '../services/VaultKeepsService';
 import { logger } from '../utils/Logger';
+import { keepTagsService } from '../services/KeepTagsService';
 
 
 
@@ -89,6 +90,53 @@ export default {
 
 
 
+        async function createTag() {
+            try {
+                const tag = await tagsService.createTag(editableTagData.value)
+                editableTagData.value = { name: '' }
+                Pop.success(`${tag.name} has been created`)
+                return tag;
+            }
+            catch (error) {
+                Pop.error(error);
+                throw error;
+            }
+        }
+
+        async function createKeepTag(tag) {
+            try {
+
+
+                const keepTagData = {
+                    tagId: tag.id,
+                    keepId: activeKeep.value.id
+                }
+
+                await keepTagsService.createKeepTag(keepTagData)
+            }
+            catch (error) {
+                Pop.error(error);
+            }
+        }
+
+        async function handleSubmit() {
+            try {
+                // Call createTag and wait for it to complete
+                const tag = await createTag();
+
+                // Once createTag is successful, call createKeepTag with the tag's ID
+                if (tag) {
+                    await createKeepTag(tag);
+                }
+
+                Pop.success('Tag and keepTag created successfully');
+            } catch (error) {
+                Pop.error('Error occurred while creating tag or keepTag.');
+            }
+        }
+
+
+
         return {
             editableVaultKeepData,
             editableTagData,
@@ -96,6 +144,9 @@ export default {
             account: computed(() => AppState.account),
             keep: computed(() => AppState.activeKeep),
             activeKeep,
+            createTag,
+            createKeepTag,
+            handleSubmit,
             async createVaultKeep(vault) {
                 try {
                     logger.log('vault id:', vault.id)
@@ -115,16 +166,52 @@ export default {
                 }
             },
 
-            async createTag() {
-                try {
-                    const tag = await tagsService.createTag(editableTagData.value)
-                    editableTagData.value = { name: '' }
-                    Pop.success(`${tag.name} has been created`)
-                }
-                catch (error) {
-                    Pop.error(error);
-                }
-            }
+
+            //     async createTag() {
+            //         try {
+            //             const tag = await tagsService.createTag(editableTagData.value)
+            //             editableTagData.value = { name: '' }
+            //             Pop.success(`${tag.name} has been created`)
+            //             return tag;
+            //         }
+            //         catch (error) {
+            //             Pop.error(error);
+            //             throw error;
+            //         }
+            //     },
+
+            //     async createKeepTag(tag) {
+            //         try {
+
+
+            //             const keepTagData = {
+            //                 tagId: tag.id,
+            //                 keepId: activeKeep.value.id
+            //             }
+
+            //             await keepTagsService.createKeepTag(keepTagData)
+            //         }
+            //         catch (error) {
+            //             Pop.error(error);
+            //         }
+            //     },
+
+            //     async handleSubmit() {
+            //      try {
+            // // Call createTag and wait for it to complete
+            //         const tag = await createTag();
+
+            // // Once createTag is successful, call createKeepTag with the tag's ID
+            //      if (tag) {
+            //          await createKeepTag(tag);
+            //     }
+
+            //             Pop.success('Tag and keepTag created successfully');
+            //         } catch (error) {
+            //             Pop.error('Error occurred while creating tag or keepTag.');
+            //         }
+            //     },
+
 
         }
     },

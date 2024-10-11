@@ -10,10 +10,6 @@ class VaultKeepsService {
         const response = await api.post('api/vaultKeeps', vaultKeepData)
         logger.log('created vaultKeep', response.data)
         const newVaultKeep = new KeepClone(response.data)
-
-        // if (AppState.activeAccount?.id == newVaultKeep.creatorId) {
-        //     AppState.vaultKeeps.push(newVaultKeep)
-        // }
         AppState.activeKeep.kept++
         return newVaultKeep
     }
