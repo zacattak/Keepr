@@ -53,6 +53,12 @@
                     </form>
 
                 </div>
+
+
+                <!-- <div>
+                    v-for="keepTag in keepTags" :key="keepTag.id" :value="keepTag.id"
+                    {{ keepTag.name }}
+                </div> -->
             </div>
         </div>
     </div>

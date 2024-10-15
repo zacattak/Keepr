@@ -14,6 +14,8 @@ export const AppState = reactive({
 
   tags: [],
 
+  keepTags: [],
+
   accountVaults: [],
 
   vaultKeeps: [],

@@ -1,4 +1,5 @@
 
+import { AppState } from "../AppState.js";
 import { TagClone } from "../models/TagClone.js";
 import { logger } from "../utils/Logger.js";
 import { api } from "./AxiosService.js";
@@ -11,6 +12,15 @@ class KeepTagsService {
 
 
         return keepTag
+    }
+
+    async getKeepTagsByKeepId(keepId) {
+        AppState.keepTags = []
+        const response = await api.get(`api/keeps/${keepId}/keepTags`);
+        logger.log('keeps tags had', response.data);
+        const keepTags = response.data.map(pojo => new TagClone(pojo));
+        AppState.keepTags = keepTags
+
     }
 }
 
