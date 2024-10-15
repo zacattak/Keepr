@@ -122,10 +122,12 @@ export default {
         async function handleSubmit() {
             try {
                 // Call createTag and wait for it to complete
+
                 const tag = await createTag();
 
                 // Once createTag is successful, call createKeepTag with the tag's ID
                 if (tag) {
+
                     await createKeepTag(tag);
                 }
 
@@ -167,50 +169,7 @@ export default {
             },
 
 
-            //     async createTag() {
-            //         try {
-            //             const tag = await tagsService.createTag(editableTagData.value)
-            //             editableTagData.value = { name: '' }
-            //             Pop.success(`${tag.name} has been created`)
-            //             return tag;
-            //         }
-            //         catch (error) {
-            //             Pop.error(error);
-            //             throw error;
-            //         }
-            //     },
 
-            //     async createKeepTag(tag) {
-            //         try {
-
-
-            //             const keepTagData = {
-            //                 tagId: tag.id,
-            //                 keepId: activeKeep.value.id
-            //             }
-
-            //             await keepTagsService.createKeepTag(keepTagData)
-            //         }
-            //         catch (error) {
-            //             Pop.error(error);
-            //         }
-            //     },
-
-            //     async handleSubmit() {
-            //      try {
-            // // Call createTag and wait for it to complete
-            //         const tag = await createTag();
-
-            // // Once createTag is successful, call createKeepTag with the tag's ID
-            //      if (tag) {
-            //          await createKeepTag(tag);
-            //     }
-
-            //             Pop.success('Tag and keepTag created successfully');
-            //         } catch (error) {
-            //             Pop.error('Error occurred while creating tag or keepTag.');
-            //         }
-            //     },
 
 
         }
