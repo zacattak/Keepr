@@ -22,6 +22,7 @@ import { computed, onMounted } from 'vue';
 import Pop from '../utils/Pop';
 import { AppState } from '../AppState';
 import { keepsService } from '../services/KeepsService.js'
+// import { keepTagsService } from '../services/KeepTagsService';
 
 
 
@@ -41,6 +42,23 @@ export default {
         Pop.error(error);
       }
     }
+
+    // async function getKeepTagsByKeepId(keepId) {
+    //   try {
+    //     await keepTagsService.getKeepTagsByKeepId(keepId)
+    //   }
+    //   catch (error) {
+    //     Pop.error(error);
+    //   }
+    // }
+
+    // async function fetchKeepsAndTags() {
+    //   await getKeeps();
+
+    //   for (const keep of AppState.keeps) {
+    //     await getKeepTagsByKeepId(keep.id);
+    //   }
+    // }
 
     onMounted(getKeeps)
     return {

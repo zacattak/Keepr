@@ -10,7 +10,12 @@
 
             <button @click="deleteKeep(keep.id)" type="button" class="btn btn-primary">DELETE</button>
         </div>
-
+        <!-- <div v-if="keepTags.length">
+            <h3>Tags:</h3>
+            <ul>
+                <li v-for="tag in keepTags" :key="tag.id">{{ tag.name }}</li>
+            </ul>
+        </div> -->
     </section>
 
 
@@ -22,8 +27,9 @@
 import { Keep } from '../models/Keep.js';
 import { keepsService } from '../services/KeepsService.js';
 import Pop from '../utils/Pop.js';
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState';
+import { keepTagsService } from '../services/KeepTagsService.js';
 // import { useRouter } from 'vue-router';
 export default {
     props: {
@@ -31,8 +37,22 @@ export default {
     },
     setup(props) {
 
-        // const router = useRouter();
 
+
+        // async function getKeepTagsByKeepId() {
+        //     try {
+        //         await keepTagsService.getKeepTagsByKeepId(props.keep.id)
+        //     }
+        //     catch (error) {
+        //         Pop.error(error);
+        //     }
+        // }
+
+
+
+
+
+        // onMounted(getKeepTagsByKeepId)
         return {
 
             getKeepById() {
@@ -43,6 +63,8 @@ export default {
                     Pop.error(error);
                 }
             },
+
+
 
             async deleteKeep(keepId) {
                 try {
