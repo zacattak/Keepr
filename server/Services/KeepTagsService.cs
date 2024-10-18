@@ -32,11 +32,13 @@ public class KeepTagsService
         TagClone tagClone = _repository.GetKeepTagById(keepTagId);
         if (tagClone == null)
         {
-            throw new Exception($"Invalid Kept Keep id: {keepTagId}");
-
+            // Handle the null case, such as returning a custom response or logging
+            return null;
         }
         return tagClone;
     }
+
+
 
     internal string DeleteKeepTag(string userId, int keepTagId)
     {

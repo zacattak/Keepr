@@ -10,12 +10,12 @@
 
             <button @click="deleteKeep(keep.id)" type="button" class="btn btn-primary">DELETE</button>
         </div>
-        <!-- <div v-if="keepTags.length">
+        <div v-if="keepTags.length">
             <h3>Tags:</h3>
             <ul>
-                <li v-for="tag in keepTags" :key="tag.id">{{ tag.name }}</li>
+                <li v-for="keepTag in keepTags" :key="keepTag.id">{{ keepTag.name }}</li>
             </ul>
-        </div> -->
+        </div>
     </section>
 
 
@@ -39,20 +39,20 @@ export default {
 
 
 
-        // async function getKeepTagsByKeepId() {
-        //     try {
-        //         await keepTagsService.getKeepTagsByKeepId(props.keep.id)
-        //     }
-        //     catch (error) {
-        //         Pop.error(error);
-        //     }
-        // }
+        async function getKeepTagsByKeepId() {
+            try {
+                await keepTagsService.getKeepTagsByKeepId(props.keep.id)
+            }
+            catch (error) {
+                Pop.error(error);
+            }
+        }
 
 
 
 
 
-        // onMounted(getKeepTagsByKeepId)
+        onMounted(getKeepTagsByKeepId)
         return {
 
             getKeepById() {
@@ -80,6 +80,7 @@ export default {
             },
 
             account: computed(() => AppState.account),
+            keepTags: computed(() => AppState.keepTags)
         }
     }
 }

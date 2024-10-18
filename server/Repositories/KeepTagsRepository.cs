@@ -28,7 +28,7 @@ public class KeepTagsRepository
         string sql = @"
         SELECT
         keepTag.*,
-        keep.*,
+        keep.*
         FROM keepTags keepTag
         JOIN keeps keep ON keep.id = keepTag.keepId
         WHERE keepTag.keepId = @keepId

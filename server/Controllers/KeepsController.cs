@@ -103,14 +103,14 @@ public class KeepsController : ControllerBase
         }
     }
 
-    [HttpGet("{keepId}/tags")]
+    [HttpGet("{keepId}/keepTags")]
     public async Task<ActionResult<List<TagClone>>> GetKeepTagsByKeepId(int keepId)
     {
         try
         {
             Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-            List<TagClone> tags = _keepTagsService.GetKeepTagsByKeepId(keepId);
-            return Ok(tags);
+            List<TagClone> keepTags = _keepTagsService.GetKeepTagsByKeepId(keepId);
+            return Ok(keepTags);
         }
         catch (Exception exception)
         {
