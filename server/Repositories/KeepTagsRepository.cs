@@ -54,6 +54,7 @@ public class KeepTagsRepository
            TagClone tagClone = new TagClone
            {
                Name = tag.Name,
+
                KeepTagId = keepTag.Id,
                KeepId = keepTag.KeepId,
                TagId = keepTag.TagId
