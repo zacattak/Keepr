@@ -56,6 +56,22 @@ public class KeepTagsController : ControllerBase
     [HttpDelete("{keepTagId}")]
     [Authorize]
 
+    // [HttpGet("{keepId}/tags")]
+    // // public async Task<ActionResult<List<TagClone>>> GetKeepTagsByKeepId(int keepId)
+    // public ActionResult<List<TagClone>> GetKeepTagsByKeepId(int keepId)
+    // {
+    //     try
+    //     {
+    //         // Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+    //         List<TagClone> keepTags = _keepTagsService.GetKeepTagsByKeepId(keepId);
+    //         return Ok(keepTags);
+    //     }
+    //     catch (Exception exception)
+    //     {
+    //         return BadRequest(exception.Message);
+    //     }
+    // }
+
     public async Task<ActionResult<string>> DeleteKeepTag(int keepTagId)
     {
         try
@@ -69,6 +85,22 @@ public class KeepTagsController : ControllerBase
 
             return BadRequest(exception.Message);
         }
-
     }
+
+    [HttpGet("{keepId}/tags")]
+    // public async Task<ActionResult<List<TagClone>>> GetKeepTagsByKeepId(int keepId)
+    public ActionResult<List<TagClone>> GetKeepTagsByKeepId(int keepId)
+    {
+        try
+        {
+            // Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            List<TagClone> keepTags = _keepTagsService.GetKeepTagsByKeepId(keepId);
+            return Ok(keepTags);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+    }
+
 }

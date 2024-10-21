@@ -103,18 +103,18 @@ public class KeepsController : ControllerBase
         }
     }
 
-    [HttpGet("{keepId}/keepTags")]
-    public async Task<ActionResult<List<TagClone>>> GetKeepTagsByKeepId(int keepId)
-    {
-        try
-        {
-            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-            List<TagClone> keepTags = _keepTagsService.GetKeepTagsByKeepId(keepId);
-            return Ok(keepTags);
-        }
-        catch (Exception exception)
-        {
-            return BadRequest(exception.Message);
-        }
-    }
+    // [HttpGet("{keepId}/keepTags")]
+    // public async Task<ActionResult<List<TagClone>>> GetKeepTagsByKeepId(int keepId)
+    // {
+    //     try
+    //     {
+    //         Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+    //         List<TagClone> keepTags = _keepTagsService.GetKeepTagsByKeepId(keepId);
+    //         return Ok(keepTags);
+    //     }
+    //     catch (Exception exception)
+    //     {
+    //         return BadRequest(exception.Message);
+    //     }
+    // }
 }

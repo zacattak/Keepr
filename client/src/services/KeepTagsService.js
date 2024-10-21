@@ -18,7 +18,7 @@ class KeepTagsService {
         AppState.keepTags = []
         // const response = await api.get(`api/keeps/${keepId}/keepTags`);
 
-        const response = await api.get(`api/keeps/${keepId}/keepTags`);
+        const response = await api.get(`api/keepTags/${keepId}/tags`);
 
         logger.log('keeps tags had', response.data);
 

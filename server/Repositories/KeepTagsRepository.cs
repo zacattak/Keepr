@@ -28,17 +28,38 @@ public class KeepTagsRepository
         string sql = @"
         SELECT
         keepTag.*,
-        keep.*
+        
+        tag.*
         FROM keepTags keepTag
-        JOIN keeps keep ON keep.id = keepTag.keepId
+        
+        JOIN tags tag ON tag.id = keepTag.tagId
         WHERE keepTag.keepId = @keepId
         ;";
 
-        List<TagClone> tagClones = _db.Query<VaultKeep, TagClone, TagClone>(sql, (keepTag, tagClone) =>
+        //     List<TagClone> tagClones = _db.Query<KeepTag, TagClone, Tag, TagClone>(sql, (keepTag, tagClone, tag) =>
+        //    {
+
+        //        tagClone.Name = tag.Name;
+        //        tagClone.KeepTagId = keepTag.Id;
+        //        tagClone.KeepId = keepTag.KeepId;
+        //        tagClone.TagId = keepTag.TagId;
+        //        return tagClone;
+        //    }, new { keepId }).ToList();
+
+        //     return tagClones;
+        // }
+        List<TagClone> tagClones = _db.Query<KeepTag, Tag, TagClone>(sql, (keepTag, tag) =>
        {
-           tagClone.KeepTagId = keepTag.Id;
+           // Create a new TagClone object and map properties from keepTag and tag
+           TagClone tagClone = new TagClone
+           {
+               Name = tag.Name,
+               KeepTagId = keepTag.Id,
+               KeepId = keepTag.KeepId,
+               TagId = keepTag.TagId
+           };
            return tagClone;
-       }, new { keepId }).ToList();
+       }, new { keepId }, splitOn: "Id").ToList();
 
         return tagClones;
     }
