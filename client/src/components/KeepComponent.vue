@@ -10,6 +10,7 @@
 
             <button @click="deleteKeep(keep.id)" type="button" class="btn btn-primary">DELETE</button>
         </div>
+        <!-- <pre>{{ keepTags }}</pre> -->
         <div v-if="keepTags.length">
             <h3>Tags:</h3>
             <ul>
@@ -41,6 +42,7 @@ export default {
 
         async function getKeepTagsByKeepId() {
             try {
+                console.log('Fetching tags for keep:', props.keep.id);
                 await keepTagsService.getKeepTagsByKeepId(props.keep.id)
             }
             catch (error) {
@@ -80,7 +82,9 @@ export default {
             },
 
             account: computed(() => AppState.account),
-            keepTags: computed(() => AppState.keepTags)
+            // keepTags: computed(() => AppState.keepTags),
+            keepTags: computed(() => AppState.keepTagsByKeep[props.keep.id] || []),
+            // keepTags: computed(() => AppState.keepTags.filter(tag => tag.keepId === props.keep.id))
         }
     }
 }

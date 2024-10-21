@@ -8,6 +8,8 @@ export const AppState = reactive({
   // @ts-ignore
   account: {},
 
+  keepTagsByKeep: {},
+
   keeps: [],
 
   vaults: [],

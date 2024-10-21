@@ -15,7 +15,7 @@ class KeepTagsService {
     }
 
     async getKeepTagsByKeepId(keepId) {
-        AppState.keepTags = []
+        // AppState.keepTags = []
         // const response = await api.get(`api/keeps/${keepId}/keepTags`);
 
         const response = await api.get(`api/keepTags/${keepId}/tags`);
@@ -27,7 +27,11 @@ class KeepTagsService {
         // AppState.keepTags = keepTags;
 
         const keepTags = response.data.map(pojo => new TagClone(pojo));
-        AppState.keepTags = keepTags
+        // AppState.keepTags = keepTags
+        AppState.keepTagsByKeep = {
+            ...AppState.keepTagsByKeep,
+            [keepId]: keepTags
+        };
     }
 }
 
