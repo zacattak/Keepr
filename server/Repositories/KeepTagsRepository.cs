@@ -54,7 +54,9 @@ public class KeepTagsRepository
            TagClone tagClone = new TagClone
            {
                Name = tag.Name,
-
+               CreatorId = tag.CreatorId,
+               CreatedAt = tag.CreatedAt,
+               UpdatedAt = tag.UpdatedAt,
                KeepTagId = keepTag.Id,
                KeepId = keepTag.KeepId,
                TagId = keepTag.TagId
@@ -80,7 +82,7 @@ public class KeepTagsRepository
         WHERE keepTag.id = @keepTagId;";
         TagClone tagClone = _db.Query<KeepTag, TagClone, Account, TagClone>(sql, (keepTag, tag, account) =>
         {
-            tag.KeepId = keepTag.KeepId;
+
             tag.KeepTagId = keepTag.Id;
             tag.KeepId = keepTag.KeepId;
             tag.CreatorId = keepTag.CreatorId;
