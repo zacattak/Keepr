@@ -11,6 +11,8 @@ public class TagsRepository
 
     internal Tag CreateTag(Tag tagData)
     {
+        tagData.Name = tagData.Name.ToLower();
+
         string sql = @"
         INSERT INTO 
         tags(creatorId, name)

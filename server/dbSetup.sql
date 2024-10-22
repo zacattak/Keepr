@@ -19,6 +19,15 @@ create TABLE tags (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created', updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update', creatorId VARCHAR(255) NOT NULL, name VARCHAR(100) NOT NULL, FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE
 )
 
+-- CREATE TABLE tags (
+--     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, 
+--     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created', 
+--     updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update', 
+--     creatorId VARCHAR(255) NOT NULL, 
+--     name VARCHAR(100) NOT NULL, 
+--     UNIQUE (name COLLATE utf8mb4_unicode_ci),  -- Case-insensitive uniqueness
+--     FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE
+-- );
 create TABLE keepTags (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created', updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update', creatorId VARCHAR(255) NOT NULL, keepId INT NOT NULL, tagId INT NOT NULL, FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE, FOREIGN KEY (keepId) REFERENCES keeps (id) ON DELETE CASCADE, FOREIGN KEY (tagId) REFERENCES tags (id) ON DELETE CASCADE
 )
@@ -28,6 +37,43 @@ ALTER TABLE accounts ADD coverImg varchar(255);
 DROP TABLE IF EXISTS tags;
 ALTER TABLE tags 
 CHANGE COLUMN tag name VARCHAR(100) NOT NULL;
+
+
+ALTER TABLE tags
+ADD lower_name VARCHAR(100);
+
+UPDATE tags
+SET lower_name = LOWER(name);
+
+ALTER TABLE tags
+ADD CONSTRAINT uc_lower_name UNIQUE (lower_name);
+
+DELETE t1
+FROM tags t1
+JOIN tags t2 ON LOWER(t1.name) = LOWER(t2.name) AND t1.id > t2.id;
+
+DELIMITER //
+
+CREATE TRIGGER before_insert_tag
+BEFORE INSERT ON tags
+FOR EACH ROW
+BEGIN
+  SET NEW.lower_name = LOWER(NEW.name);
+END;
+//
+
+CREATE TRIGGER before_update_tag
+BEFORE UPDATE ON tags
+FOR EACH ROW
+BEGIN
+  SET NEW.lower_name = LOWER(NEW.name);
+END;
+//
+
+DELIMITER ;
+
+-- ALTER TABLE tags 
+-- ADD CONSTRAINT uc_name UNIQUE (LOWER(name));
 
 SELECT keep.*, account.*
 FROM keeps keep
