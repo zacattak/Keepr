@@ -12,9 +12,14 @@
         </div>
         <!-- <pre>{{ keepTags }}</pre> -->
         <div v-if="keepTags.length">
-            <h3>Tags:</h3>
-            <ul>
+            <!-- <h3>Tags:</h3> -->
+            <!-- <ul>
                 <li v-for="keepTag in keepTags" :key="keepTag.id">{{ keepTag.name }}</li>
+            </ul> -->
+            <ul class="tags-container">
+                <li v-for="keepTag in keepTags" :key="keepTag.id" class="tag-item">
+                    {{ keepTag.name }}
+                </li>
             </ul>
         </div>
     </section>
@@ -96,5 +101,31 @@ export default {
     width: 100%;
     object-fit: cover;
     height: 40vh;
+}
+
+.tags-container {
+    display: flex;
+    /* Display items in a row */
+    flex-wrap: wrap;
+    /* Allow wrapping to the next line if there are too many tags */
+    list-style-type: none;
+    /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+}
+
+.tag-item {
+    margin: 5px;
+    /* Add spacing between tags */
+    padding: 8px 12px;
+    /* Add padding inside the tag */
+    border: 1px solid #ccc;
+    /* Add a rectangular border */
+    border-radius: 8px;
+    /* Round the corners */
+    background-color: #f9f9f9;
+    /* Optional background color */
+    font-size: 14px;
+    /* Font size for the tags */
 }
 </style>

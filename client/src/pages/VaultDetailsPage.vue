@@ -1,5 +1,5 @@
 <template>
-    <section v-if="vault" class="container-fluid bg-info">
+    <section v-if="vault" class="container-fluid">
 
         <div class="row text-center">
             <div class="col-12">
@@ -123,6 +123,13 @@ export default {
 //     // object-fit: cover;
 //     height: 40vh;
 // }
+
+.container-fluid {
+    background-color: #dcdcdc;
+    /* Cooler, more modern gray */
+    min-height: 100vh;
+    /* Ensure the background covers the full page height */
+}
 
 .masonry {
     column-count: 3;

@@ -1,5 +1,5 @@
 <template>
-  <section class="container-fluid bg-info">
+  <section class="container-fluid">
 
 
 
@@ -111,8 +111,13 @@ export default {
 
 <style scoped>
 .container-fluid {
-  /* background-color: green; */
+  background-color: #dcdcdc;
+  /* Cooler, more modern gray */
   min-height: 100vh;
+  /* Ensure the background covers the full page height */
+  padding: 0;
+
+  margin: 0;
 }
 
 .creatorImg {

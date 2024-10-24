@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid bg-info">
+  <div class="container-fluid">
     <section class="row">
       <div class="mx-auto masonry">
 
@@ -69,6 +69,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.container-fluid {
+  background-color: #dcdcdc;
+  /* Cooler, more modern gray */
+  min-height: 100vh;
+  /* Ensure the background covers the full page height */
+}
+
 .card {
   border: 2px solid black;
   border-radius: 16px;

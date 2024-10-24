@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid text-center bg-info">
+  <div class="container-fluid text-center">
     <h1>Welcome {{ account.name }}</h1>
 
 
@@ -63,6 +63,13 @@ export default {
 </script>
 
 <style scoped>
+.container-fluid {
+  background-color: #dcdcdc;
+  /* Cooler, more modern gray */
+  min-height: 100vh;
+  /* Ensure the background covers the full page height */
+}
+
 img {
   max-width: 100px;
 }

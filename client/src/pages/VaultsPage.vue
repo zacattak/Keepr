@@ -1,6 +1,6 @@
 <template>
 
-    <div class="container-fluid bg-info">
+    <div class="container-fluid">
 
         <section class="row">
 
@@ -44,6 +44,13 @@ export default {
 
 
 <style lang="scss" scoped>
+.container-fluid {
+    background-color: #dcdcdc;
+    /* Cooler, more modern gray */
+    min-height: 100vh;
+    /* Ensure the background covers the full page height */
+}
+
 .card {
     border: 2px solid black;
     border-radius: 16px;

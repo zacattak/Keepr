@@ -32,6 +32,14 @@ create TABLE keepTags (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created', updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update', creatorId VARCHAR(255) NOT NULL, keepId INT NOT NULL, tagId INT NOT NULL, FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE, FOREIGN KEY (keepId) REFERENCES keeps (id) ON DELETE CASCADE, FOREIGN KEY (tagId) REFERENCES tags (id) ON DELETE CASCADE
 )
 
+
+-- ALTER TABLE keepTags
+-- ADD CONSTRAINT UC_KeepTag UNIQUE (keepId, tagId);
+
+-- ALTER TABLE keepTags
+-- DROP INDEX UC_KeepTag;
+
+
 ALTER TABLE accounts ADD coverImg varchar(255);
 
 DROP TABLE IF EXISTS tags;
@@ -47,6 +55,14 @@ SET lower_name = LOWER(name);
 
 ALTER TABLE tags
 ADD CONSTRAINT uc_lower_name UNIQUE (lower_name);
+
+ALTER TABLE tags
+ADD COLUMN name_lower VARCHAR(100) AS (LOWER(name)) VIRTUAL;
+
+ALTER TABLE tags
+DROP COLUMN name_lower;
+
+
 
 DELETE t1
 FROM tags t1
@@ -72,8 +88,7 @@ END;
 
 DELIMITER ;
 
--- ALTER TABLE tags 
--- ADD CONSTRAINT uc_name UNIQUE (LOWER(name));
+-- 
 
 SELECT keep.*, account.*
 FROM keeps keep
