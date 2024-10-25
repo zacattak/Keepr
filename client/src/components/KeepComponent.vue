@@ -8,7 +8,7 @@
         </div>
         <div v-if="keep.creatorId == account.id">
 
-            <button @click="deleteKeep(keep.id)" type="button" class="btn btn-primary">DELETE</button>
+            <button @click="deleteKeep(keep.id)" type="button" class="btn btn-primary mt-1">DELETE</button>
         </div>
         <!-- <pre>{{ keepTags }}</pre> -->
         <div v-if="keepTags.length">
