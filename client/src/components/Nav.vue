@@ -1,9 +1,9 @@
 <template>
     <nav class="bg-dark">
         <section class="row">
-            <div class="col-3 text-center">
+            <div class="col-12 col-md-3 text-center">
 
-                <!-- <p class="my-3 text-info">placeholder</p> -->
+
                 <div class="dropdown my-2">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -12,13 +12,13 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <form class="dropdown-item px-4 py-3" @submit.prevent="createKeep()">
                             <div class="form-group">
-                                <!-- <label for="keepName">Keep Name</label> -->
+
                                 <input v-model="editableKeepData.name" type="text" class="form-control" id="name"
                                     placeholder="Enter Keep Name" required maxlength="255">
-                                <!-- <label for="keepDescription">Keep Description</label> -->
+
                                 <input v-model="editableKeepData.description" type="text" class="form-control"
                                     id="description" placeholder="Enter Keep Description" required maxlength="1000">
-                                <!-- <label for="keepImg">Keep Image</label> -->
+
                                 <input v-model="editableKeepData.img" type="text" class="form-control" id="img"
                                     placeholder="Enter Keep Image" required maxlength="1000">
 
@@ -26,14 +26,10 @@
                             <button type="submit" class="btn btn-primary">Create Keep</button>
                         </form>
 
-                        <!-- <a class="dropdown-item" href="#">Create Keep</a> -->
-                        <!-- <a class="dropdown-item" href="#">Create Vault</a> -->
+
                         <form class="dropdown-item px-4 py-3" @submit.prevent="createVault()">
                             <div class="form-group">
-                                <!-- <label for="vaultName">Vault Name</label>
-                                <label for="vaultDescription">Vault Description</label>
-                                <label for="vaultImg">Vault Image</label>
-                                <label for="isPrivate"></label> -->
+
                                 <input v-model="editableVaultData.name" type="text" class="form-control" id="vaultName"
                                     placeholder="Enter Vault Name" required maxlength="255">
                                 <input v-model="editableVaultData.description" type="text" class="form-control"
@@ -49,10 +45,7 @@
 
                         <form class="dropdown-item px-4 py-3" @submit.prevent="createPrivateVault()">
                             <div class="form-group">
-                                <!-- <label for="vaultName">Vault Name</label>
-                                <label for="vaultDescription">Vault Description</label>
-                                <label for="vaultImg">Vault Image</label>
-                                <label for="isPrivate"></label> -->
+
                                 <input v-model="editablePrivateVaultData.name" type="text" class="form-control"
                                     id="privateVaultName" placeholder="Enter Vault Name" required maxlength="255">
                                 <input v-model="editablePrivateVaultData.description" type="text" class="form-control"
@@ -60,8 +53,6 @@
                                     maxlength="1000">
                                 <input v-model="editablePrivateVaultData.img" type="text" class="form-control"
                                     id="privateVaultImg" placeholder="Enter Vault Img" required maxlength="1000">
-                                <!-- <input type="bool" class="form-control" id="isPrivate" placeholder="Enter Vault Name"> -->
-
 
                             </div>
                             <button type="submit" class="btn btn-danger">Create Private Vault</button>
@@ -73,22 +64,22 @@
 
             </div>
 
-            <div class="col-3 text-center">
-                <!-- <h1>🕋</h1> -->
+            <div class="col-12 col-md-3 text-center">
+
                 <router-link class="" :to="{ name: 'Home' }">
                     <p class="my-3 text-info">Chamber of Keeps</p>
                 </router-link>
 
             </div>
 
-            <div class="col-3 text-center">
+            <div class="col-12 col-md-3 text-center">
                 <router-link class="" :to="{ name: 'Vaults' }">
                     <p class="my-3 text-info">My Vaults</p>
                 </router-link>
 
             </div>
 
-            <div class="col-3 text-center">
+            <div class="col-12 col-md-3 text-center">
                 <p class="my-2">
                     <Login />
                 </p>
@@ -109,9 +100,7 @@ import { ref } from 'vue';
 import Pop from '../utils/Pop';
 import { Account } from '../models/Account';
 export default {
-    // props: {
-    //     account: { type: Account, required: true }
-    // },
+
     setup() {
         const editableKeepData = ref({ name: '', description: '', img: '' })
 
@@ -170,4 +159,9 @@ export default {
 </script>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.bg-dark {
+    background-color: #f0e6d2 !important;
+    /* Beige-cream background */
+}
+</style>
