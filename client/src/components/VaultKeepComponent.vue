@@ -9,7 +9,7 @@
         </div>
         <div v-if="keep.creatorId == account.id">
 
-            <button @click="deleteVaultKeep(vaultKeepId)" type="button" class="btn btn-primary">DELETE</button>
+            <button @click="deleteVaultKeep(vaultKeepId)" type="button" class="btn btn-primary mt-1">DELETE</button>
         </div>
 
     </section>
