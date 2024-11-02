@@ -27,10 +27,16 @@ public class TagsController : ControllerBase
             Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
             tagData.CreatorId = userInfo.Id;
             Tag tag = _tagsService.CreateTag(tagData);
+            if (tag == null)
+            {
+                return Conflict(new { message = "A tag with this name already exists for the given keep." });
+            }
+
             return Ok(tag);
         }
         catch (Exception exception)
         {
+
 
             return BadRequest(exception.Message);
         }
