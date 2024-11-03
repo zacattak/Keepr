@@ -1,16 +1,26 @@
 <template>
 
     <section class="row d-flex justify-content-center">
-        <div @click="getKeepById()" class="selectable" type="button" data-bs-toggle="modal" data-bs-target="#keepModal">
-            <!-- <p class="mb-0 text-center">Views:{{ keep.views }} Kept:{{ keep.kept }}</p> -->
+        <!-- <div @click="getKeepById()" class="selectable" type="button" data-bs-toggle="modal" data-bs-target="#keepModal">
+
             <h2 class="text-center">{{ keep.name }}</h2>
+
             <img :src="keep.img" :alt="keep.name" class="img-fluid rounded shadow">
         </div>
         <div v-if="keep.creatorId == account.id">
 
             <button @click="deleteKeep(keep.id)" type="button" class="btn btn-primary mt-1">DELETE</button>
+        </div> -->
+        <div @click="getKeepById()" class="selectable" type="button" data-bs-toggle="modal" data-bs-target="#keepModal">
+            <h2 class="text-center">{{ keep.name }}</h2>
+            <div class="image-container">
+                <img :src="keep.img" :alt="keep.name" class="img-fluid rounded shadow">
+                <div v-if="keep.creatorId == account.id" class="delete-button-container">
+                    <button @click="deleteKeep(keep.id)" type="button" class="btn btn-primary">DELETE</button>
+                </div>
+            </div>
         </div>
-        <!-- <pre>{{ keepTags }}</pre> -->
+
         <div v-if="keepTags.length">
             <!-- <h3>Tags:</h3> -->
             <!-- <ul>
@@ -101,6 +111,22 @@ export default {
     width: 100%;
     object-fit: cover;
     height: 40vh;
+}
+
+.image-container {
+    position: relative;
+    /* Set the parent to relative for positioning children */
+}
+
+.delete-button-container {
+    position: absolute;
+    /* Position the button absolutely within the relative container */
+    bottom: 10px;
+    /* Adjust as needed for vertical spacing from the bottom */
+    left: 10px;
+    /* Adjust as needed for horizontal spacing from the left */
+    z-index: 10;
+    /* Ensure the button is above the image */
 }
 
 .tags-container {

@@ -29,7 +29,8 @@ public class TagsController : ControllerBase
             Tag tag = _tagsService.CreateTag(tagData);
             if (tag == null)
             {
-                return Conflict(new { message = "A tag with this name already exists for the given keep." });
+                // return Conflict(new { message = "A tag with this name already exists for the given keep." });
+                return BadRequest("A tag with this name already exists."); // Custom message for null response
             }
 
             return Ok(tag);

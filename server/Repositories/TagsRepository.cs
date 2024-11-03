@@ -32,7 +32,8 @@ public class TagsRepository
         if (existingCount > 0)
         {
             // Instead of throwing an exception, return null or a specific value
-            return null; // Indicate that the tag already exists
+            return null;
+            // throw new Exception($"A tag with the name '{tagData.Name}' already exists.");
         }
 
 
