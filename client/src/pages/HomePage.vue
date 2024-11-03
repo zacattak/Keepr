@@ -2,78 +2,77 @@
   <div class="container-fluid">
     <section class="row">
       <div class="mx-auto masonry">
-
-        <div v-for="keep in keeps" :key="keep.id" class="">
-
-          <!-- <div v-for="keep in keeps" :key="keep.id" class="col-9 col-md-3 m-2 card mb-2 mt-2"> -->
-
+        <div v-for="keep in paginatedKeeps" :key="keep.id" class="">
           <KeepComponent :keep="keep" />
-
         </div>
-
       </div>
     </section>
-  </div>
 
+
+    <div class="pagination-controls">
+      <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+    </div>
+  </div>
 </template>
 
 <script>
-import { computed, onMounted } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import Pop from '../utils/Pop';
 import { AppState } from '../AppState';
-import { keepsService } from '../services/KeepsService.js'
-// import { keepTagsService } from '../services/KeepTagsService';
-
-
-
+import { keepsService } from '../services/KeepsService.js';
 
 export default {
-  // props: {
-  //       account: { type: Account, required: true }
-  //   },
-
   setup() {
+    const currentPage = ref(1);
+    const keepsPerPage = 20;
 
     async function getKeeps() {
       try {
-        await keepsService.getKeeps()
-      }
-      catch (error) {
+        await keepsService.getKeeps();
+      } catch (error) {
         Pop.error(error);
       }
     }
 
-    // async function getKeepTagsByKeepId(keepId) {
-    //   try {
-    //     await keepTagsService.getKeepTagsByKeepId(keepId)
-    //   }
-    //   catch (error) {
-    //     Pop.error(error);
-    //   }
-    // }
+    onMounted(getKeeps);
 
-    // async function fetchKeepsAndTags() {
-    //   await getKeeps();
+    const totalPages = computed(() => Math.ceil(AppState.keeps.length / keepsPerPage));
+    const paginatedKeeps = computed(() => {
+      const start = (currentPage.value - 1) * keepsPerPage;
+      const end = start + keepsPerPage;
+      return AppState.keeps.slice(start, end);
+    });
 
-    //   for (const keep of AppState.keeps) {
-    //     await getKeepTagsByKeepId(keep.id);
-    //   }
-    // }
-
-    onMounted(getKeeps)
-    return {
-      keeps: computed(() => AppState.keeps)
+    function nextPage() {
+      if (currentPage.value < totalPages.value) {
+        currentPage.value++;
+      }
     }
+
+    function prevPage() {
+      if (currentPage.value > 1) {
+        currentPage.value--;
+      }
+    }
+
+    return {
+      keeps: computed(() => AppState.keeps),
+      paginatedKeeps,
+      currentPage,
+      totalPages,
+      nextPage,
+      prevPage
+    };
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
 .container-fluid {
   background-color: #dcdcdc;
-  /* Cooler, more modern gray */
   min-height: 100vh;
-  /* Ensure the background covers the full page height */
 }
 
 .card {
@@ -84,33 +83,34 @@ export default {
 
 .masonry {
   column-count: 3;
-  /* Set the number of columns */
   column-gap: 1rem;
-  /* Adjust gap between columns */
-
-
 }
 
 .masonry>div {
   break-inside: avoid;
-  /* Prevent the item from breaking between columns */
   margin-bottom: 1rem;
-  /* Add some spacing between items */
 }
 
-/* For tablets (medium screens), show 2 columns */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.pagination-controls button {
+  margin: 0 0.5rem;
+}
+
+/* Responsive Masonry Layout */
 @media (max-width: 768px) {
   .masonry {
     column-count: 2;
-    /* Reduce to 2 columns */
   }
 }
 
-/* For mobile phones (small screens), show 1 column */
 @media (max-width: 576px) {
   .masonry {
     column-count: 1;
-    /* Reduce to 1 column */
   }
 }
 </style>
