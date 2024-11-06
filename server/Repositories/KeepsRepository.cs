@@ -124,6 +124,19 @@ public class KeepsRepository
         return keeps;
     }
 
+    public IEnumerable<Keep> GetKeepsByTagName(string tagName)
+    {
+        string sql = @"
+        SELECT k.*
+        FROM keeps k
+        JOIN keepTags kt ON k.id = kt.keepId
+        JOIN tags t ON t.id = kt.tagId
+        WHERE LOWER(t.name) = @TagName";
+
+        // Use lowercase for case-insensitive comparison
+        return _db.Query<Keep>(sql, new { TagName = tagName.ToLower() });
+    }
+
 }
 
 

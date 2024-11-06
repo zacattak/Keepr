@@ -49,7 +49,11 @@ import { keepTagsService } from '../services/KeepTagsService.js';
 // import { useRouter } from 'vue-router';
 export default {
     props: {
-        keep: { type: Keep, required: true }
+        keep: {
+            // type: Keep, 
+            type: Object,
+            required: true
+        }
     },
     setup(props) {
 

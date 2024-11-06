@@ -117,4 +117,18 @@ public class KeepsController : ControllerBase
     //         return BadRequest(exception.Message);
     //     }
     // }
+
+    [HttpGet("search")]
+    public ActionResult<IEnumerable<Keep>> SearchKeepsByTag(string tagName)
+    {
+        try
+        {
+            var keeps = _keepsService.GetKeepsByTagName(tagName);
+            return Ok(keeps);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
 }

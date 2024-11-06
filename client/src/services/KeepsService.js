@@ -43,6 +43,13 @@ class KeepsService {
         logger.log('destroyed keep', response.data)
     }
 
+    async searchKeepsByTag(tagName) {
+        const res = await api.get('/api/keeps/search', { params: { tagName } });
+        return res.data;
+        // AppState.keeps = res.data.map(pojo => new Keep(pojo))
+
+    }
+
 }
 
 export const keepsService = new KeepsService()

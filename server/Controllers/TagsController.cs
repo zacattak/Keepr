@@ -20,13 +20,13 @@ public class TagsController : ControllerBase
     [Authorize]
 
 
-    public async Task<ActionResult<Tag>> CreateTag([FromBody] Tag tagData)
+    public async Task<ActionResult<Tag>> CreateTag([FromBody] Tag tagData, int keepId)
     {
         try
         {
             Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
             tagData.CreatorId = userInfo.Id;
-            Tag tag = _tagsService.CreateTag(tagData);
+            Tag tag = _tagsService.CreateTag(tagData, keepId);
             if (tag == null)
             {
                 // return Conflict(new { message = "A tag with this name already exists for the given keep." });

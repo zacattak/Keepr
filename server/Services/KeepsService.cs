@@ -89,4 +89,14 @@ public class KeepsService
         List<Keep> keeps = _repository.GetKeepsByAccountId(profileId);
         return keeps;
     }
+
+    public IEnumerable<Keep> GetKeepsByTagName(string tagName)
+    {
+        if (string.IsNullOrWhiteSpace(tagName))
+        {
+            throw new ArgumentException("Tag name cannot be empty.", nameof(tagName));
+        }
+
+        return _repository.GetKeepsByTagName(tagName);
+    }
 }

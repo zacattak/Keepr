@@ -8,9 +8,9 @@ public class TagsService
         _repository = repository;
     }
 
-    internal Tag CreateTag(Tag tagData)
+    internal Tag CreateTag(Tag tagData, int keepId)
     {
-        Tag tag = _repository.CreateTag(tagData);
+        Tag tag = _repository.CreateTag(tagData, keepId);
         return tag;
     }
 

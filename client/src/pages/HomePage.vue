@@ -1,6 +1,7 @@
 <template>
   <div class="container-fluid">
     <section class="row">
+      <SearchComponent />
       <div class="mx-auto masonry">
         <div v-for="keep in paginatedKeeps" :key="keep.id" class="">
           <KeepComponent :keep="keep" />
@@ -22,6 +23,7 @@ import { computed, ref, onMounted } from 'vue';
 import Pop from '../utils/Pop';
 import { AppState } from '../AppState';
 import { keepsService } from '../services/KeepsService.js';
+import SearchComponent from '../components/SearchComponent.vue';
 
 export default {
   setup() {
