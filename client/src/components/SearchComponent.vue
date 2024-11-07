@@ -1,5 +1,5 @@
 <template>
-    <div class="search-container">
+    <div class="search-container col-12">
         <input type="text" v-model="tagName" class="search-bar" placeholder="Search by tag name"
             @keyup.enter="searchKeeps" />
         <!-- <button @click="searchKeeps">Search</button> -->
@@ -37,39 +37,48 @@ export default {
 </script>
 
 <style scoped>
+.search-container {
+    width: 100%;
+}
+
 .masonry {
+    width: 100%;
     column-count: 3;
     column-gap: 1rem;
 }
 
-.search-container {
-    position: relative;
-    width: 100%;
-    max-width: 300px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
+.masonry>.search-result {
+    break-inside: avoid;
+    margin-bottom: 1rem;
 }
 
-/* Styling for the search input field */
+
+@media (max-width: 768px) {
+    .masonry {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 576px) {
+    .masonry {
+        column-count: 1;
+    }
+}
+
 .search-bar {
-    width: 100%;
+    width: 30%;
     padding: 8px 12px;
-    /* Adds inset spacing for placeholder text */
     border-radius: 5px;
     border: 1px solid #ccc;
     background-color: #333;
-    /* Dark gray background */
     color: #fff;
-    /* White text */
     font-size: 16px;
     outline: none;
     transition: background-color 0.3s ease;
 }
 
-/* Lighter background color when the search bar is focused */
 .search-bar:focus {
     background-color: #555;
-    /* Lighter gray when active */
+
 }
 </style>

@@ -66,7 +66,7 @@
 
             <div class="col-12 col-md-3 text-center">
 
-                <router-link class="" :to="{ name: 'Home' }">
+                <router-link class="" :to="{ name: 'Home' }" @click.native="refreshPage">
                     <p class="my-3 text-info">Chamber of Keeps</p>
                 </router-link>
 
@@ -108,7 +108,13 @@ export default {
 
         const editablePrivateVaultData = ref({ name: '', description: '', img: '', isPrivate: true })
 
+        function refreshPage() {
+            window.location.reload();
+        }
+
         return {
+            refreshPage,
+
             editableKeepData,
 
             editableVaultData,
