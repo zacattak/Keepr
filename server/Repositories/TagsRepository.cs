@@ -13,52 +13,70 @@ public class TagsRepository
 
     // internal Tag CreateTag(Tag tagData, int keepId)
     // {
+    //     // Normalize the tag name to lowercase
     //     tagData.Name = tagData.Name.ToLower();
 
-    //     string existingTagCheckSql = @"
-    //     SELECT kt.*
-    //     FROM keepTags kt
-    //     JOIN tags t ON kt.tagId = t.id
-    //     WHERE t.name = @Name AND kt.keepId = @KeepId;";
+    //     // Step 1: Retrieve all tagIds associated with this keepId from the keepTags table
+    //     string getTagIdsSql = @"
+    //         SELECT kt.tagId
+    //         FROM keepTags kt
+    //         WHERE kt.keepId = @KeepId;
+    //     ";
 
-    //     var existingKeepTag = _db.QueryFirstOrDefault(existingTagCheckSql, new { Name = tagData.Name, KeepId = keepId });
+    //     // Execute the query to get all tagIds for the given keepId
+    //     var tagIds = _db.Query<int>(getTagIdsSql, new { KeepId = keepId }).ToList();
 
-    //     if (existingKeepTag != null)
+    //     // Step 2: If no tags are associated with the keep, proceed to create the new tag
+    //     if (!tagIds.Any())
     //     {
-    //         // Return null or throw an exception if the tag already exists for this keep
-    //         return null; // or throw new Exception("This tag already exists for the given keep.");
+    //         return CreateNewTag(tagData);  // No tags, safe to create the new tag
     //     }
 
-    //     string checkSql = "SELECT COUNT(1) FROM tags WHERE name = @Name;";
-    //     int existingCount = _db.ExecuteScalar<int>(checkSql, new { Name = tagData.Name });
+    //     // Step 3: Retrieve the tag names associated with the tagIds from the tags table
+    //     string getTagNamesSql = @"
+    //         SELECT t.name
+    //         FROM tags t
+    //         WHERE t.id IN @TagIds;
+    //     ";
 
-    //     if (existingCount > 0)
+    //     // Execute the query to retrieve all tag names for the given tagIds
+    //     var existingTagNames = _db.Query<string>(getTagNamesSql, new { TagIds = tagIds }).ToList();
+
+    //     // Step 4: Check if the tag name already exists in the existingTagNames list
+    //     if (existingTagNames.Contains(tagData.Name))
     //     {
-    //         // Instead of throwing an exception, return null or a specific value
-    //         return null;
-    //         // throw new Exception($"A tag with the name '{tagData.Name}' already exists.");
+    //         // If a tag with the same name already exists for the given keepId, return null (or throw an error)
+    //         return null;  // Return null or throw new Exception("Tag already exists for this keep.");
     //     }
 
+    //     // Step 5: Proceed to create the new tag if no duplicates are found
+    //     return CreateNewTag(tagData);
+    // }
 
-    //     string sql = @"
-    //     INSERT INTO 
-    //     tags(creatorId, name)
-    //     VALUES(@CreatorId, @Name);
+    // // Helper method to handle the tag creation if no duplicate is found
+    // private Tag CreateNewTag(Tag tagData)
+    // {
+    //     // SQL to insert the new tag
+    //     string insertTagSql = @"
+    //         INSERT INTO tags (creatorId, name)
+    //         VALUES (@CreatorId, @Name);
 
-    //     SELECT
-    //     tag.*,
-    //     account.*
-    //     FROM tags tag
-    //     JOIN accounts account on tag.creatorId = account.id
-    //     WHERE tag.id = LAST_INSERT_ID();";
+    //         SELECT
+    //             tag.*,
+    //             account.*
+    //         FROM tags tag
+    //         JOIN accounts account ON tag.creatorId = account.id
+    //         WHERE tag.id = LAST_INSERT_ID();
+    //     ";
 
-    //     Tag tag = _db.Query<Tag, Account, Tag>(sql, (tag, account) =>
-    //    {
-    //        tag.Creator = account;
-    //        return tag;
-    //    }, tagData).FirstOrDefault();
+    //     // Insert the new tag and retrieve the tag along with its creator account
+    //     Tag tag = _db.Query<Tag, Account, Tag>(insertTagSql, (tag, account) =>
+    //     {
+    //         tag.Creator = account;
+    //         return tag;
+    //     }, tagData).FirstOrDefault();
+
     //     return tag;
-
     // }
 
 
@@ -68,12 +86,17 @@ public class TagsRepository
         tagData.Name = tagData.Name.ToLower();
 
         string checkExistingTagSql = @"
-        SELECT tag.* FROM tags tag
+        SELECT tag.* 
+        FROM tags tag
         JOIN keepTags kt ON kt.tagId = tag.id
-        WHERE LOWER(tag.name) = @Name AND kt.keepId = @KeepId
+        WHERE tag.name = @Name AND kt.keepId = @KeepId
         LIMIT 1;
-    ";
+        ";
         var existingTag = _db.Query<Tag>(checkExistingTagSql, new { Name = tagData.Name, KeepId = keepId }).FirstOrDefault();
+
+        Console.WriteLine(existingTag != null
+    ? $"Found existing tag with ID: {existingTag.Id}, Name: {existingTag.Name}"
+    : "No existing tag found");
 
         if (existingTag != null)
         {
@@ -96,64 +119,14 @@ public class TagsRepository
 
 
 
-    // internal Tag CreateTag(Tag tagData, int keepId, string creatorId)
-    // {
-    //     // Normalize tag name to lowercase
-    //     tagData.Name = tagData.Name.ToLower();
+    // string checkExistingTagSql = @"
+    // SELECT tag.* FROM tags tag
+    // JOIN keepTags kt ON kt.tagId = tag.id
+    // WHERE LOWER(tag.name) = @Name AND kt.keepId = @KeepId
+    // LIMIT 1;
 
-    //     // First, check if a tag with this name already exists for the specified keep
-    //     string checkKeepTagSql = @"
-    //     SELECT COUNT(1) FROM keepTags kt
-    //     JOIN tags t ON kt.tagId = t.id
-    //     WHERE kt.keepId = @KeepId AND LOWER(t.name) = @Name;
-    // ";
 
-    //     int existingKeepTagCount = _db.ExecuteScalar<int>(checkKeepTagSql, new { KeepId = keepId, Name = tagData.Name });
 
-    //     // If a tag with this name is already associated with the specified keep, return null or handle accordingly
-    //     if (existingKeepTagCount > 0)
-    //     {
-    //         return null; // Prevent creation
-    //     }
-
-    //     // Check if a tag with this name already exists in the tags table, independent of keeps
-    //     string checkTagSql = "SELECT * FROM tags WHERE LOWER(name) = @Name LIMIT 1;";
-    //     Tag existingTag = _db.Query<Tag>(checkTagSql, new { Name = tagData.Name }).FirstOrDefault();
-
-    //     // If a tag with this name exists, reuse it. Otherwise, create a new tag.
-    //     Tag tag = existingTag ?? CreateNewTag(tagData);
-
-    //     // Associate the tag with the keep in keepTags
-    //     string associateTagSql = @"
-    //         INSERT INTO keepTags (keepId, tagId, creatorId)
-    //         VALUES (@KeepId, @TagId, @CreatorId);
-    //     ";
-    //     _db.Execute(associateTagSql, new { KeepId = keepId, TagId = tag.Id, CreatorId = creatorId });
-
-    //     return tag;
-    // }
-
-    // // Helper method to create a new tag if it doesn't already exist
-    // private Tag CreateNewTag(Tag tagData)
-    // {
-    //     string sql = @"
-    //     INSERT INTO tags (creatorId, name)
-    //     VALUES (@CreatorId, @Name);
-
-    //     SELECT 
-    //         tag.*, 
-    //         account.* 
-    //     FROM tags tag
-    //     JOIN accounts account ON tag.creatorId = account.id
-    //     WHERE tag.id = LAST_INSERT_ID();
-    // ";
-
-    //     return _db.Query<Tag, Account, Tag>(sql, (tag, account) =>
-    //     {
-    //         tag.Creator = account;
-    //         return tag;
-    //     }, tagData).FirstOrDefault();
-    // }
 
 
 }
