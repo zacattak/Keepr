@@ -66,7 +66,7 @@
 
             <div class="col-12 col-md-3 text-center">
 
-                <router-link class="" :to="{ name: 'Home' }" @click.native="refreshPage">
+                <router-link class="" :to="{ name: 'Home' }">
                     <p class="my-3 text-info">Chamber of Keeps</p>
                 </router-link>
 
